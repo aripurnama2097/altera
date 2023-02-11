@@ -2,5 +2,14 @@ nbproject
 npm-debug.log
 node_modules
 .sass-cache
-vendor
+/vendor
 .env
+/public/css
+/public/js
+/public/assets/
+/public/vendors/
+/public/images/
+/public/docs/
+/public/build/
+/production
+/config
