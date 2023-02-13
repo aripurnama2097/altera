@@ -20,7 +20,8 @@ class AlterationController extends Controller
         // ->whereRaw('year(input_date) > 2020')->pluck('partnumber');
 
 
-        $data = DB::table('alterations')->get();
+        $data = DB::table('alterations')->orderBy('id', 'desc')->get();
+
         return view('alteration.index', compact('data'));
     }
 
@@ -28,10 +29,9 @@ class AlterationController extends Controller
 
         alteration::create($request->all());
 
-        return $request;
-    
+   
         
-        return redirect('/alterations')->with('success', 'Success! Data Berhasil Disimpan');;
+        return redirect()->back()->with('success', 'Data Berhasil Disimpan');
     }
 
   
@@ -45,17 +45,13 @@ class AlterationController extends Controller
 
 
         return redirect('/alteration')->with('success', 'Upload Master Alteration Success');
-        
-        // $request->validate([
-        //     'file' => 'required|mimes:csv,txt',
-        // ]);
 
-        // $file = $request->file('file');
+    }
 
-        // return $file;
+    public function deleteAll(Request $request){
 
-        // Excel::import(new AlterationsImport, 'users.xlsx');
+        DB::table('alterations')->delete();
 
-
+        return redirect()->back()->with('delete', 'All records have been deleted.');
     }
 }

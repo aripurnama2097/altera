@@ -11,25 +11,14 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AlterationController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\CompareController;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\alterationImport;
 
 
 
 
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+//===================================ROUTE HOME=================================
 
 Route::get('/', function () {
     return view(
@@ -37,22 +26,18 @@ Route::get('/', function () {
         ["title" => "Home"]
     );
 });
-
-
-
-
 Route::get('/home', function() {
     return view('home'); })->name('home')->middleware('auth');
 
-// LOGIN
+//===================================ROUTE LOGIN=================================
 Route::get('/login',[LoginController::class, 'index'])->name('login'); //->middleware('guest'); // penamaan route login
 Route::post('/login',[LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']); // method lgogout
 Route::get('/login/reset_password',[ResetPasswordController::class, 'index']);
-
 Route::post('/login/reset_password',[ResetPasswordController::class, 'resetPassword']);
 
-// Routing Register User
+
+//===================================ROUTE REGISTER=================================
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
 
@@ -60,16 +45,16 @@ Route::post('/register', [RegisterController::class, 'store']);
 //===================================ROUTE DASHBOARD=================================
 Route::get('/dashboard',[DashboardController::class,'index']);
 
-//===================================ROUTE UPLOAD ALTERATION MASTER=================================
+//===================================ROUTE  ALTERATION MASTER=================================
 Route::get('/alteration',[AlterationController::class,'index']);
 Route::post('/alteration/create',[AlterationController::class,'create']);
-
 Route::post('/alteration/upload',[AlterationController::class,'importCSV']);
+Route::get('alteration/delete',[AlterationController::class,'deleteAll']);
 
 
+//===================================ROUTE COMPARE=================================
 
-
-
+Route::get('/compare',[CompareController::class,'index']);
 
 
 

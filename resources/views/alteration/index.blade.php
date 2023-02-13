@@ -14,6 +14,10 @@
           @if(Session::has('success'))
           <p class="alert alert-success">{{Session::get('success')}}</p>
           @endif
+
+          @if(Session::has('delete'))
+          <p class="alert alert-info">{{Session::get('delete')}}</p>
+          @endif
         </div>
 
         <div class="title_right">
@@ -53,75 +57,30 @@
                 {{-- <div class="input-group mb-3">
                   <label for="file">Upload CSV File:</label>
                   <input type="file" class="form-control-file" id="file" name="file">
-                    <button type="submit" class=" btn btn-warning btn-sm" >Upload</button>
+                  <br>
+                  <br>
+                    <button type="submit" class=" btn btn-primary btn-sm" >Upload</button>
                     
                   </div> --}}
                   
-                  <div class="input-group">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <button class="btn btn-primary btn-sm" type="submit" id="inputGroupFileAddon03">Upload</button>
+                    </div>
                     <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
-                      <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+                      <input type="file" class="custom-file-input" id="inputGroupFile03"  name="file" aria-describedby="inputGroupFileAddon03">
+                      <label class="custom-file-label" for="file">Choose file</label>
                     </div>
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Button</button>
-                    </div>
-                  </div>
-                
+                  </div>    
               </form>
               <br />
             </div>
           </div>
-           <div class="x_panel">
-            {{-- <div class="table-responsive">
-                <table class="table table-striped jambo_table bulk_action">
-                  <thead>
-                    <tr class="headings">
-                      <th>
-                        <input type="checkbox" id="check-all" class="flat">
-                      </th>
-                      <th class="column-title">Doc Number </th>
-                      <th class="column-title">Old Part Number </th>
-                      <th class="column-title">New Part Number </th>
-                      <th class="column-title">Model </th>
-                      <th class="column-title">Serial </th>
-                      <th class="column-title">WU </th>
-                      <th class="column-title">Running Date</th>
-                      <th class="column-title no-link last"><span class="nobr">Action</span>
-                      </th>
-                      <th class="bulk-actions" colspan="7">
-                        <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                      </th>
-                    </tr>
-                  </thead>
-      
-                  <tbody>
-                    @foreach($data as $key => $value)
-                        
-                   
-                    <tr class="even pointer">
-                      <td class="a-center ">   </td>
-                      <td class="a-center "> <input type="checkbox" id="check-all" >
-                         {{$value->doc_no}} </td>
-                      <td class="a-center ">  <input type="checkbox" id="check-all" >
-                        {{$value->old_part}} </td>
-                      <td class="a-center "> 
-                        <input type="checkbox" id="check-all" > {{$value->new_part}} </td>
-                      <td class="a-center "> 
-                        <input type="checkbox" id="check-all" > {{$value->model}} </td>
-                      <td class="a-center "> 
-                        <input type="checkbox" id="check-all" > {{$value->serial}} </td>
-                      <td class="a-center ">  
-                        <input type="checkbox" id="check-all" >{{$value->wu}} </td>
-                      <td class="a-center "> 
-                        <<input type="checkbox" id="check-all" >{{$value->running_date}} </td>
-                      <td class=" last"><a href="#">View</a>
-                      </td>
-                    </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-            </div> --}}
 
+
+
+          {{------------------------------------ DATA ALTERATION---------------------------------- --}}
+           <div class="x_panel">
             <div class="col-md-12 col-sm-12 ">
               <div class="x_panel">
                 <div class="x_title">
@@ -132,10 +91,9 @@
                     <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          {{-- <a class="dropdown-item" href="#">Settings 1</a>
-                          <a class="dropdown-item" href="#">Settings 2</a> --}}
-                        </div>
+                      </div>
                     </li>
+                   
                     <li><a class="close-link"><i class="fa fa-close"></i></a>
                     </li>
                   </ul>
@@ -148,48 +106,45 @@
                   <p class="text-muted font-13 m-b-30">
                    
                   </p>
-                  <table id="datatable-checkbox" class="table table-striped jambo_table bulk_action" style="width:100%">
+                 
+                  <table id="datatable" class="table table-striped jambo_table bulk_action" style="width:100%">
+                    <button  id="delete-all-data" class="btn btn-warning btn-sm"><i class="bi bi-trash3"></i> DELETE</button>
+                    {{-- href="{{url('alteration/delete')}}" --}}
                     <thead>
                       <tr class="headings">
-
-                  <th class="column-title">No </th>
-                  <th class="column-title">Doc Number </th>
-                  <th class="column-title">Old Part Number </th>
-                  <th class="column-title">New Part Number </th>
-                  <th class="column-title">Model </th>
-                  <th class="column-title">Serial </th>
-                  <th class="column-title">WU </th>
-                  <th class="column-title">Running Date</th>
-                  <th class="column-title no-link last"><span class="nobr">Action</span>
+                      <th class="column-title">No </th>
+                      <th class="column-title">Doc Number </th>
+                      <th class="column-title">Old Part Number </th>
+                      <th class="column-title">New Part Number </th>  
+                      <th class="column-title">Model </th>
+                      <th class="column-title">Serial </th>
+                      <th class="column-title">WU </th>
+                      <th class="column-title">Running Date</th>
+                      <th class="column-title no-link last"><span class="nobr">Action</span>
                       </tr>
                     </thead>
 
 
                     <tbody>
-                      @foreach($data as $key => $value)
+                      <?php
+                      $no = 1
+                      ?>
+                      @foreach($data as $key => $value)           
                       <tr class="even pointer">
-                            <td class="a-center"> {{$value->id}}
-                            </td>
-        
-                            <td class="a-center"> 
-                              {{$value->doc_no}} </td>
-                            <td> 
-                              {{$value->old_part}} </td>
-                            <td class="a-center "> 
-                              {{$value->new_part}} </td>
-                            <td class="a-center "> 
-                              {{$value->model}} </td>
-                            <td class="a-center "> 
-                              {{$value->start_serial}} </td>
-                            <td class="a-center ">  
-                            {{$value->wu}} </td>
-                            <td class="a-center "> 
-                            {{$value->running_date}} </td>
+                            <td class="a-center">  {{$no}} </td>
+                            <td class="a-center">  {{$value->doc_no}} </td>                      
+                            <td class="a-center">  {{$value->old_part_no}} </td>                             
+                            <td class="a-center">  {{$value->new_part_no}} </td>                          
+                            <td class="a-center "> {{$value->model}} </td>                             
+                            <td class="a-center "> {{$value->start_serial}} </td>                             
+                            <td class="a-center "> {{$value->wu}} </td>    
+                            <td class="a-center "> {{$value->running_date}} </td>
+                          
                             <td class=" last"><a href="#">View</a>
                             </td>
                       </tr>
                     
-                  
+                      <?php $no++ ;?>
 
                         @endforeach
                     </tbody>
@@ -260,7 +215,7 @@
                   </select> --}}
 
                   <label for="exampleDataList" class="form-label">Old Part Number</label>
-                  <input class="form-control rounded-lg" list="datalistOptions" id="exampleDataList" name="old_part" placeholder="Type to search...">
+                  <input class="form-control rounded-lg" list="datalistOptions" id="exampleDataList" name="old_part_no" placeholder="Type to search...">
                   {{-- <datalist id="datalistOptions">
                     @foreach($data_part as $dd)
                     <option value="{{$dd}}">{{$dd}}</option>
@@ -289,7 +244,7 @@
                   </select> --}}
 
                   <label for="exampleDataList" class="form-label">New Part Number</label>
-                  <input class="form-control rounded-lg" list="datalistOptions" id="exampleDataList" name="new_part" placeholder="Type to search..." >
+                  <input class="form-control rounded-lg" list="datalistOptions" id="exampleDataList" name="new_part_no" placeholder="Type to search..." >
                   {{-- <datalist id="datalistOptions">
                     @foreach($data_part as $dd)
                     <option value="{{$dd}}">{{$dd}}</option>
@@ -360,8 +315,8 @@
           </div> 
         
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-warning">Save</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save</button>
           </div>
         </div>
         </form>
@@ -374,20 +329,31 @@
 
 <script>
 
-$('import').submit(function(e) {
-    e.preventDefault();
-    let formData = new FormData();
-    formData.append('file', $('#file')[0].files[0]);
-    $.ajax({
-        url: '/alteration/upload',
-        method: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(data) {
-            console.log(data);
+
+$(document).ready(function() {
+  $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $('#delete-all-data').click(function() {
+        if (confirm('Are you sure you want to delete all records?')) {
+            $.ajax({
+                url: "{{url('alteration/delete')}}",
+                type: 'get',
+                success: function(result) {
+                    alert('All records have been deleted.');
+                }
+            });
         }
     });
 });
+
+
+
+
+
+
 </script>
 @endsection
