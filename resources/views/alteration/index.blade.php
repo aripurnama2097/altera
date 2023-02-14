@@ -55,23 +55,21 @@
               <form action="{{url('/alteration/upload')}}" method="post" enctype="multipart/form-data" >
                 @csrf
                 {{-- <div class="input-group mb-3">
-                  <label for="file">Upload CSV File:</label>
-                  <input type="file" class="form-control-file" id="file" name="file">
-                  <br>
-                  <br>
-                    <button type="submit" class=" btn btn-primary btn-sm" >Upload</button>
-                    
-                  </div> --}}
-                  
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <button class="btn btn-primary btn-sm" type="submit" id="inputGroupFileAddon03">Upload</button>
-                    </div>
-                    <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="inputGroupFile03"  name="file" aria-describedby="inputGroupFileAddon03">
-                      <label class="custom-file-label" for="file">Choose file</label>
-                    </div>
-                  </div>    
+                  <div class="input-group-prepend">
+                    <button class="btn btn-primary btn-sm" type="submit" id="inputGroupFileAddon03">Upload</button>
+                  </div>
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile03"  name="file" aria-describedby="inputGroupFileAddon03">
+                    <label class="custom-file-label" for="file">Choose file</label>
+                  </div>
+                </div>     --}}
+               
+
+                <div class="form-group">
+                  <input type="file" class="form-control-file border" name="file">
+                </div>
+                <button type="submit" class="btn btn-successs btn-sm">Upload</button>
+                 
               </form>
               <br />
             </div>
@@ -108,7 +106,8 @@
                   </p>
                  
                   <table id="datatable" class="table table-striped jambo_table bulk_action" style="width:100%">
-                    <button  id="delete-all-data" class="btn btn-warning btn-sm"><i class="bi bi-trash3"></i> DELETE</button>
+                    <button  id="delete-all-data" class="btn btn-warning btn-sm"><i class="bi bi-trash3"></i> Reset Master</button>
+                    <a type="button" href="{{url('/alteration')}}" class="btn btn-info btn-sm text-white"><i class="fa fa-refresh"></i> Refresh</a>
                     {{-- href="{{url('alteration/delete')}}" --}}
                     <thead>
                       <tr class="headings">
@@ -338,12 +337,12 @@ $(document).ready(function() {
     });
 
     $('#delete-all-data').click(function() {
-        if (confirm('Are you sure you want to delete all records?')) {
+        if (confirm('Are you sure you want to reset all records?')) {
             $.ajax({
                 url: "{{url('alteration/delete')}}",
                 type: 'get',
                 success: function(result) {
-                    alert('All records have been deleted.');
+                    alert('All records master have been reset');
                 }
             });
         }

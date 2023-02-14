@@ -40,19 +40,28 @@ class AlterationsImport implements ToModel,WithHeadingRow
         //     $rows[$key] = $value;
         // }
 
-
-        $data = new alteration([
-           'doc_no'         => "{$row['doc_no'      ]}",
-           'old_part'       => "{$row['old_part'    ]}",
-           'new_part'       => "{$row['new_part'    ]}",
-           'model'          => "{$row['model'       ]}",
-           'start_serial'         => "{$row['serial'      ]}",
-           'running_date'   => "{$row['running_date']}",
-           'wu'             => "{$row['wu'          ]}",
-        ]);
-
-
-        return $data;
+        if(empty($row['running_date'])){
+            $data = new alteration([
+                'doc_no'         => "{$row['doc_no'      ]}",
+                'old_part_no'    => "{$row['old_part_no'  ]}",
+                'new_part_no'    => "{$row['new_part_no'    ]}",
+                'model'          => "{$row['model'       ]}",
+                'start_serial'   => "{$row['start_serial'      ]}",
+                'wu'             => "{$row['wu'          ]}"
+            ]);
+        }
+        else{
+            $data = new alteration([
+                'doc_no'         => "{$row['doc_no'      ]}",
+                'old_part_no'    => "{$row['old_part_no'  ]}",
+                'new_part_no'    => "{$row['new_part_no'    ]}",
+                'model'          => "{$row['model'       ]}",
+                'start_serial'   => "{$row['start_serial'      ]}",
+                'running_date'   => "{$row['running_date']}",
+                'wu'             => "{$row['wu'          ]}"
+            ]);
+        }
+       return $data;
     }
-   
+
 }

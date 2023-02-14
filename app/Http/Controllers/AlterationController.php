@@ -44,7 +44,7 @@ class AlterationController extends Controller
         Excel::import(new AlterationsImport, request()->file('file'));
 
 
-        return redirect('/alteration')->with('success', 'Upload Master Alteration Success');
+        return redirect()->back()->with('success', 'Upload Master Alteration Success');
 
     }
 

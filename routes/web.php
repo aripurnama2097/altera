@@ -55,6 +55,7 @@ Route::get('alteration/delete',[AlterationController::class,'deleteAll']);
 //===================================ROUTE COMPARE=================================
 
 Route::get('/compare',[CompareController::class,'index']);
+Route::post('/compare/startCompare',[CompareController::class,'startCompare']);
 
 
 
