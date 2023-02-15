@@ -66,9 +66,9 @@
                
 
                 <div class="form-group">
-                  <input type="file" class="form-control-file border" name="file">
+                  <input type="file" class="form-control-file border row-cols-lg-6" name="file" required>
                 </div>
-                <button type="submit" class="btn btn-successs btn-sm">Upload</button>
+                <button type="submit" class="btn btn-secondary btn-sm"><i class="bi bi-upload"></i> Upload</button>
                  
               </form>
               <br />
@@ -106,7 +106,7 @@
                   </p>
                  
                   <table id="datatable" class="table table-striped jambo_table bulk_action" style="width:100%">
-                    <button  id="delete-all-data" class="btn btn-warning btn-sm"><i class="bi bi-trash3"></i> Reset Master</button>
+                    <button  id="delete-all-data" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i> Reset Master</button>
                     <a type="button" href="{{url('/alteration')}}" class="btn btn-info btn-sm text-white"><i class="fa fa-refresh"></i> Refresh</a>
                     {{-- href="{{url('alteration/delete')}}" --}}
                     <thead>

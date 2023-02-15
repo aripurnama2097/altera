@@ -23,13 +23,13 @@
 
         <li><a><i class="fa fa-desktop"></i>Compare  <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
-            <li><a href="tables.html">Tables</a></li>
+            <li><a href="{{url('/compare')}}">Start Compare</a></li>
             <li><a href="tables_dynamic.html">Table Dynamic</a></li>
           </ul>
         </li>
         <li><a><i class="fa fa-bar-chart-o"></i> Record Data <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
-            <li><a href="chartjs.html">Chart JS</a></li>
+            <li><a href="{{url('/records')}}">Result Compare</a></li>
             <li><a href="chartjs2.html">Chart JS2</a></li>
             <li><a href="morisjs.html">Moris JS</a></li>
             <li><a href="echarts.html">ECharts</a></li>
