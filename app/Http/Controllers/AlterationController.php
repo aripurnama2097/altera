@@ -50,7 +50,7 @@ class AlterationController extends Controller
 
     public function deleteAll(Request $request){
 
-        DB::table('alterations')->delete();
+        DB::table('alterations')->truncate();
 
         return redirect()->back()->with('delete', 'All records have been deleted.');
     }
