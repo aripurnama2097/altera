@@ -10,17 +10,19 @@ class CompareController extends Controller
 {
     public function index(){
 
-        $pso= DB::connection("mysql2")->table('t_file')->distinct('create_time')
-        ->whereRaw('year(input_date) > 2022')->pluck('create_time');
-        // ->orderBy('desc');
-           
+        // $pso= DB::connection("mysql2")->table('t_file')->distinct('create_time')
+        // ->whereRaw('year(input_date) > 2022')->pluck('create_time');
+        // ->orderBy('create_time','desc');
+
+        $pso = DB::connection("mysql2")->table('t_file')->distinct('create_time');
+        $pso = $pso->orderBy('create_time','desc')->limit(100)->pluck('create_time');
         return view('compare.index', compact('pso'));
     }
 
 
     public function startCompare(Request $request){
 
-        $update = 'UPDATE';
+       
         $create_time = $request->create_time;
       
         // $result =  Compare::where('create_time','=', $create_time)
@@ -52,9 +54,13 @@ class CompareController extends Controller
                             order by id asc");
 
 
-            return $result;
-        // return view('/compare', compact('
-        // result'));    
+            return redirect('/compare')->with('success', 'COMPARE DATA SUCCESS, CHECK RECORD MENU');
+        
+            // if('status'== NULL){
+            //     $data = connection('mysql')
+            //     ->where('status', '=''ok')
+            //     get();
+            // }
         
         
         // });
