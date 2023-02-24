@@ -33,20 +33,23 @@
       </div>
 
       <div class="clearfix"></div>
-      <a type="button" data-toggle="modal" data-target="#staticBackdrop" class="btn btn-success btn-sm text-white"><i class="fa fa-edit"></i> Create data</a>
+      
       <div class="row">
         <div class="col-md-12 col-sm-12  ">
           <div class="x_panel">
             <div class="x_title">
               <h2>Upload Master Data Alteration</h2>
               <ul class="nav navbar-right panel_toolbox">
+                <a type="button" data-toggle="modal" data-target="#staticBackdrop" class="btn btn-success btn-sm text-white"><i class="fa fa-edit"></i> Create data</a>
+                <a type="button" href="{{url('alteration/export')}}" class="btn btn-warning btn-sm text-dark"><i class="fa fa-download"></i> Header</a>
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
+               
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                 </li>
-                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                </li>
+                {{-- <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li> --}}
               </ul>
               <div class="clearfix"></div>
             </div>
@@ -68,7 +71,7 @@
                 <div class="form-group">
                   <input type="file" class="form-control-file border row-cols-lg-6" name="file" required>
                 </div>
-                <button type="submit" class="btn btn-secondary btn-sm"><i class="bi bi-upload"></i> Upload</button>
+                <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i> Upload</button>
                  
               </form>
               <br />
@@ -92,8 +95,8 @@
                       </div>
                     </li>
                    
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
+                    {{-- <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li> --}}
                   </ul>
                   <div class="clearfix"></div>
                 </div>
@@ -119,7 +122,7 @@
                       <th class="column-title">Serial </th>
                       <th class="column-title">WU </th>
                       <th class="column-title">Running Date</th>
-                      <th class="column-title no-link last"><span class="nobr">Action</span>
+                      {{-- <th class="column-title no-link last"><span class="nobr">Action</span> --}}
                       </tr>
                     </thead>
 
@@ -139,7 +142,7 @@
                             <td class="a-center "> {{$value->wu}} </td>    
                             <td class="a-center "> {{$value->running_date}} </td>
                           
-                            <td class=" last"><a href="#">View</a>
+                            {{-- <td class=" last"><a href="#">View</a> --}}
                             </td>
                       </tr>
                     
@@ -315,7 +318,14 @@
         
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" id="submit" onclick="spinner()" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <div id="spinner" class="spinner" style="display: none;">
+            <div class="spinner-border text-info text-end" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
           </div>
         </div>
         </form>
@@ -347,6 +357,17 @@ $(document).ready(function() {
             });
         }
     });
+  
+
+      const submitButton = document.querySelector('#submit');
+      // Mendapatkan spinner loading
+      const spinner = document.querySelector('#spinner');
+      // Ketika tombol submit diklik
+      submitButton.addEventListener('click', function() {
+      // Menampilkan spinner loading
+      spinner.style.display = 'block';
+    });
+
 });
 
 

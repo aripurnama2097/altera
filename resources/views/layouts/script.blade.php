@@ -39,13 +39,17 @@
     
         <!-- Custom Theme Scripts -->
         <script src="{{asset ('') }}build/js/custom.min.js"></script>
+        {{-- <script src="{{asset ('') }}build/js/custom_revbutton.js"></script> --}}
 
 
         <script src="{{asset('')}}vendors/dropzone/dist/min/dropzone.min.js"></script>
 
 
+
+
         <script src="{{asset('')}}vendors/iCheck/icheck.min.js"></script>
         <!-- Datatables -->
+        <script src="{{asset('')}}vendors/datatables.net/js/jquery.dataTables.js"></script>
         <script src="{{asset('')}}vendors/datatables.net/js/jquery.dataTables.min.js"></script>
         <script src="{{asset('')}}vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
         <script src="{{asset('')}}vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>

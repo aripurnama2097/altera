@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Imports\AlterationsImport;
+use App\Exports\FormatHeaderExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 
@@ -18,7 +19,6 @@ class AlterationController extends Controller
 
         // $data_part= DB::connection("sqlsrv2")->table('stdPack')->distinct('partnumber')
         // ->whereRaw('year(input_date) > 2020')->pluck('partnumber');
-
 
         $data = DB::table('alterations')->orderBy('id', 'desc')->get();
 
@@ -53,5 +53,11 @@ class AlterationController extends Controller
         DB::table('alterations')->truncate();
 
         return redirect()->back()->with('delete', 'All records have been deleted.');
+    }
+
+    public function export(){
+       
+        return Excel::download(new FormatHeaderExport, 'FormatHeader.csv', \Maatwebsite\Excel\Excel::CSV);
+    
     }
 }
