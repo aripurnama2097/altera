@@ -4,16 +4,18 @@
 
 use Facade\FlareClient\View;
 use Illuminate\Http\Request;
+use App\Imports\alterationImport;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\BackupController;
+use App\Http\Controllers\RecordController;
+use App\Http\Controllers\CompareController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AlterationController;
 use App\Http\Controllers\ResetPasswordController;
-use App\Http\Controllers\CompareController;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\alterationImport;
 
 
 
@@ -38,7 +40,7 @@ Route::post('/login/reset_password',[ResetPasswordController::class, 'resetPassw
 
 
 //===================================ROUTE REGISTER=================================
-Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
+Route::get('/register', [RegisterController::class, 'index']);
 Route::post('/register', [RegisterController::class, 'store']);
 
 
@@ -50,6 +52,7 @@ Route::get('/alteration',[AlterationController::class,'index']);
 Route::post('/alteration/create',[AlterationController::class,'create']);
 Route::post('/alteration/upload',[AlterationController::class,'importCSV']);
 Route::get('alteration/delete',[AlterationController::class,'deleteAll']);
+Route::get('alteration/export',[AlterationController::class,'export']);
 
 
 //===================================ROUTE COMPARE=================================
@@ -57,6 +60,17 @@ Route::get('alteration/delete',[AlterationController::class,'deleteAll']);
 Route::get('/compare',[CompareController::class,'index']);
 Route::post('/compare/startCompare',[CompareController::class,'startCompare']);
 
+
+
+//===================================ROUTE RECORD=================================
+Route::get('records',[RecordController::class,'index']);
+Route::post('/records/filter',[RecordController::class,'filter']);
+Route::get('/records/backup',[RecordController::class,'backup']);
+
+
+//===================================ROUTE RECORD=================================
+Route::get('backup',[BackupController::class,'index']);
+Route::post('/backup/filter',[BackupController::class,'filter']);
 
 
 
