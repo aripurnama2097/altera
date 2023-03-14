@@ -55,16 +55,14 @@ Route::get('/alteration',[AlterationController::class,'index']);
 Route::post('/alteration/create',[AlterationController::class,'create']);
 Route::post('/alteration/upload',[AlterationController::class,'importCSV']);
 Route::get('alteration/delete',[AlterationController::class,'deleteAll']);
-Route::get('alteration/destroy/{id}',[AlterationController::class,'destroy']);
+Route::get('alteration/{id}/destroy/',[AlterationController::class,'destroy']);
 Route::get('alteration/export',[AlterationController::class,'export']);
 Route::post('alteration/update/{id}',[AlterationController::class,'update']);
 
 
 //===================================ROUTE COMPARE=================================
-
 Route::get('/compare',[CompareController::class,'index']);
 Route::post('/compare/startCompare',[CompareController::class,'startCompare']);
-
 
 
 //===================================ROUTE RECORD=================================

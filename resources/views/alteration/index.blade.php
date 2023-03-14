@@ -147,7 +147,7 @@
                             <td class=" last">
                              <a  class="btn btn-primary btn-sm text-white"  data-toggle="modal" data-target="#updateModal_{{$value->id}}">Edit</a>
 
-                             <form action="{{url('/alteration/'.$value->id. '/destroy')}}" method="POST" onsubmit="return confirm('Delete Part Data?')">
+                             <form action="{{url('/alteration/'.$value->id. '/destroy')}}" method="GET" onsubmit="return confirm('Delete Part Data?')">
                               @method('delete')
                               @csrf							
                               <input type="hidden" name="s_method" value="DELETE">
