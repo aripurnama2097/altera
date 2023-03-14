@@ -32,16 +32,18 @@
         </div>
       </div>
 
-      <div class="clearfix"></div>
-      
+      <div class="clearfix"></div>    
       <div class="row">
         <div class="col-md-12 col-sm-12  ">
           <div class="x_panel">
             <div class="x_title">
               <h2>Upload Master Data Alteration</h2>
               <ul class="nav navbar-right panel_toolbox">
-                <a type="button" data-toggle="modal" data-target="#staticBackdrop" class="btn btn-success btn-sm text-white"><i class="fa fa-edit"></i> Create data</a>
-                <a type="button" href="{{url('alteration/export')}}" class="btn btn-warning btn-sm text-dark"><i class="fa fa-download"></i> Header</a>
+                <div class="btn-group btn-sm " role="group" aria-label="Basic example">
+                  <a type="button" data-toggle="modal" data-target="#staticBackdrop" class="btn btn-primary btn-sm text-white shadow-lg"><i class="fa fa-edit"></i> Create data</a>
+                <a type="button" href="{{url('alteration/export')}}" class="btn btn-warning btn-sm text-dark shadow-lg"><i class="fa fa-download"></i> Header</a>
+                  {{-- <button type="button" class="btn btn-secondary btn-sm">Right</button> --}}
+                </div>
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
                
@@ -66,10 +68,9 @@
                     <label class="custom-file-label" for="file">Choose file</label>
                   </div>
                 </div>     --}}
-               
-
-                <div class="form-group">
-                  <input type="file" class="form-control-file border row-cols-lg-6" name="file" required>
+          
+                <div class="form-group form-control">
+                  <input type="file" class="form-control-file form-control-xs border border-secondary" name="file" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i> Upload</button>
                  
@@ -109,9 +110,10 @@
                   </p>
                  
                   <table id="datatable" class="table table-striped jambo_table bulk_action" style="width:100%">
-                    <button  id="delete-all-data" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i> Reset Master</button>
+                    <div class="btn-group btn-sm " role="group" aria-label="Basic example">
+                      <button  id="delete-all-data" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i> Reset Master</button>
                     <a type="button" href="{{url('/alteration')}}" class="btn btn-info btn-sm text-white"><i class="fa fa-refresh"></i> Refresh</a>
-                    {{-- href="{{url('alteration/delete')}}" --}}
+                    </div>{{-- href="{{url('alteration/delete')}}" --}}
                     <thead>
                       <tr class="headings">
                       <th class="column-title">No </th>
@@ -122,7 +124,7 @@
                       <th class="column-title">Serial </th>
                       <th class="column-title">WU </th>
                       <th class="column-title">Running Date</th>
-                      {{-- <th class="column-title no-link last"><span class="nobr">Action</span> --}}
+                      <th class="column-title no-link last"><span class="nobr">Action</span>
                       </tr>
                     </thead>
 
@@ -142,7 +144,152 @@
                             <td class="a-center "> {{$value->wu}} </td>    
                             <td class="a-center "> {{$value->running_date}} </td>
                           
-                            {{-- <td class=" last"><a href="#">View</a> --}}
+                            <td class=" last">
+                             <a  class="btn btn-primary btn-sm text-white"  data-toggle="modal" data-target="#updateModal_{{$value->id}}">Edit</a>
+
+                             <form action="{{url('/alteration/'.$value->id. '/destroy')}}" method="POST" onsubmit="return confirm('Delete Part Data?')">
+                              @method('delete')
+                              @csrf							
+                              <input type="hidden" name="s_method" value="DELETE">
+                              <button type="submit" class="btn btn-warning btn-sm" ></i>Delete</button> 
+                            </form>	
+               	
+                            <div class="modal fade" id="updateModal_{{$value->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                  <h1 class="modal-title fs-5" id="exampleModalLabel">UPDATE DATA</h1>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <form action="alteration/update/{{$value->id}}" method="POST">
+                                    @csrf
+                                    {{-- <div class="breadcomb-area rounded"> --}}
+                                      <div class="container">
+
+                                        <div class="row">				
+                                          <div class="col-lg-12 ">
+                                            <div class="form-group ic-cmp-int">
+                                              <div class="form-ic-cmp">
+                                                <i class="notika-icon notika"></i>
+                                              </div>
+                                              <div class="nk-int-st">
+                                              <input type="text" class="form-control mb-3" name="doc_no" placeholder="DOC NUMBER" value="{{$value->doc_no}}"required>
+                                              @foreach ($errors->get('doc_no') as $msg)
+                                              <p class="text-danger">{{$msg}} </p>
+                                                @endforeach
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                  
+                                        <div class="row">
+                                          <div class="col-lg-12 ">
+                                            <div class="form-group ic-cmp-int">
+                                              <div class="form-ic-cmp">
+                                                <i class="notika-icon notika"></i>
+                                              </div>
+                                              <div class="nk-int-st">
+                                                <input type="text" class="form-control mb-3"
+                                                  name="old_part_no" placeholder="OLD PART NUMBER" value="{{$value->old_part_no}}"required>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                            
+                                        <div class="row">
+                                          <div class="col-lg-12 ">
+                                            <div class="form-group ic-cmp-int">
+                                              <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-part"></i>
+                                              </div>
+                                              <div class="nk-int-st">
+                                                <input type="text" class="form-control mb-3"
+                                                  name="new_part_no" placeholder="NEW PART " value="{{$value->new_part_no}}"required >
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                            
+                                        <div class="row">
+                                          <div class="col-lg-12 ">
+                                            <div class="form-group ic-cmp-int">
+                                              <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-part"></i>
+                                              </div>
+                                              <div class="nk-int-st">
+                                                <input type="text" class="form-control mb-3"
+                                                  name="model" placeholder="MODEL" value="{{$value->model}}"required>
+                                                
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>	
+
+                                        <div class="row">
+                                          <div class="col-lg-12 ">
+                                            <div class="form-group ic-cmp-int">
+                                              <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-part"></i>
+                                              </div>
+                                              <div class="nk-int-st">
+                                                <input type="text" class="form-control mb-3"
+                                                  name="start_serial" placeholder="start_serial" value="{{$value->start_serial}}"required>
+                                                
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>	
+
+                                         <div class="row">
+                                          <div class="col-lg-12 ">
+                                            <div class="form-group ic-cmp-int">
+                                              <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-part"></i>
+                                              </div>
+                                              <div class="nk-int-st">
+                                                <input type="text" class="form-control mb-3"
+                                                  name="running_date" placeholder="RUNNING DATE" value="{{$value->running_date}}">
+                                                
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>	
+
+
+                                         <div class="row">
+                                          <div class="col-lg-12 ">
+                                            <div class="form-group ic-cmp-int">
+                                              <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-part"></i>
+                                              </div>
+                                              <div class="nk-int-st">
+                                                <input type="text" class="form-control mb-3"
+                                                  name="wu" placeholder="WU" value="{{$value->wu}}"required>
+                                                
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>	
+
+
+                                        <div class="row">															
+                                          <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                          <button type="submit" class="btn btn-primary">Save changes</button>
+                                          </div>								
+                                        </div>
+                                      </div>
+                                    {{-- </div> --}}
+                                  </form>
+                                </div>
+                                </div>
+                                </div>
+                              </div>
+                           
+								
                             </td>
                       </tr>
                     
@@ -157,12 +304,7 @@
           </div>
               </div>
             </div>
-
           </div>
-
-          
-
-          
         </div>
       </div>
     </div>
@@ -172,7 +314,7 @@
 
 <!-- MODAL CREATE DATA MASTER -->
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-lg ">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel">INPUT DATA MASTER</h5>
@@ -316,14 +458,14 @@
             </div>
           </div> 
         
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-            <button type="submit" id="submit" onclick="spinner()" class="btn btn-primary">Save</button>
+          <div class="modal-footer s">
+            <button type="button" id="cancel"class="btn btn-danger hadow-lg" data-dismiss="modal"><i class="fa fa-close"></i>  Cancel</button>
+            <button type="submit" id="submit" onclick="spinner()" class="btn btn-info shadow-lg"><i class="fa fa-save"></i>  Submit</button>
           </div>
         </div>
         <div class="d-flex justify-content-end">
           <div id="spinner" class="spinner" style="display: none;">
-            <div class="spinner-border text-info text-end" role="status">
+            <div class="spinner-border text-primary text-end" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
           </div>
@@ -357,23 +499,24 @@ $(document).ready(function() {
             });
         }
     });
-  
 
-      const submitButton = document.querySelector('#submit');
-      // Mendapatkan spinner loading
-      const spinner = document.querySelector('#spinner');
-      // Ketika tombol submit diklik
-      submitButton.addEventListener('click', function() {
+
+    const cancelButton = document.querySelector('#cancel');
+    const submitButton = document.querySelector('#submit');
+    // Mendapatkan spinner loading
+    const spinner = document.querySelector('#spinner');
+    // Ketika tombol submit diklik
+    submitButton.addEventListener('click', function() {
       // Menampilkan spinner loading
       spinner.style.display = 'block';
     });
 
+    cancelButton.addEventListener('click', function() {
+      // Menampilkan spinner loading
+      spinner.style.display = 'none';
+    });
+
 });
-
-
-
-
-
 
 </script>
 @endsection

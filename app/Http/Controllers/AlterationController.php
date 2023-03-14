@@ -7,7 +7,7 @@ use App\Imports\AlterationsImport;
 use App\Exports\FormatHeaderExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Alteration;
@@ -56,8 +56,36 @@ class AlterationController extends Controller
     }
 
     public function export(){
+
+        $date = Carbon::now()->format('Y-m-d');
+        $filename = 'Format_Header' . $date . '.csv';
        
-        return Excel::download(new FormatHeaderExport, 'FormatHeader.csv', \Maatwebsite\Excel\Excel::CSV);
+        return Excel::download(new FormatHeaderExport, $filename, \Maatwebsite\Excel\Excel::CSV);
     
     }
+
+    public function destroy($id)
+    {
+        $model=Alteration::find($id);
+        $model->delete();// METHOD DELETE
+        return redirect('/alteration')->with('success', 'Success! Data Berhasil Dihapus');
+    }
+
+    public function update(Request $request, $id)
+    {
+
+        $model = Alteration::find($id);   
+
+        $model->doc_no      = $request->doc_no;
+        $model->old_part_no = $request->old_part_no;
+        $model->new_part_no = $request->new_part_no;
+        $model->model       = $request->model;
+        $model->start_serial= $request->start_serial;
+        $model->running_date= $request->running_date;
+        $model->wu          = $request->wu;
+        $model->save();
+        
+        return redirect('/alteration')->with('success', 'Success! Data Berhasil Diupdate');
+    }
+
 }
