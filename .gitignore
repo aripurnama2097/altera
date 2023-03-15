@@ -3,7 +3,7 @@ npm-debug.log
 node_modules
 .sass-cache
 /vendor
-.env
+
 /public/css
 /public/js
 /public/assets/
@@ -12,4 +12,7 @@ node_modules
 /public/docs/
 /public/build/
 /production
-/config
+
+/database/migrations
+/public/src
+/public/DataTables
