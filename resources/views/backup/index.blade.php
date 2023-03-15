@@ -107,12 +107,10 @@
                    
                   </p>
                  
-                  <table id="datatable-buttons" class="table table-striped jambo_table bulk_action" >
+                  <table id="datatable" class="table table-striped jambo_table bulk_action" >
                     {{-- <button  id="delete-all-data" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i> Reset Master</button> --}}
                     <div class="d-flex justify-content-end">
-                      <a type="button" href="{{url('/records')}}" class="btn btn-info btn-sm text-white"><i class="fa fa-refresh"></i> Refresh</a>
-                     
-                      
+                      <a type="button" href="{{url('/backup')}}" class="btn btn-info btn-sm text-white"><i class="fa fa-refresh"></i> Refresh</a>                    
                     </div>
                  
                     {{-- <a type="button" data-toggle="modal" data-target="#staticBackdrop" class="btn btn-success btn-sm text-white"><i class="fa fa-filter"></i> Filter Data</a>
@@ -139,7 +137,6 @@
                       <th class="column-title text-center">SMT Date</th>          
                       </tr>
                     </thead>
-
                     <tbody>
                       <?php
                       $no = 1

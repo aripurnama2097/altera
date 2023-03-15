@@ -16,10 +16,10 @@ class CreateAlterationsTable extends Migration
         Schema::create('alterations', function (Blueprint $table) {
             $table->id();
             $table->string('doc_no');
-            $table->string('old_part');
-            $table->string('new_part');
+            $table->string('old_part_no');
+            $table->string('new_part_no');
             $table->string('model');
-            $table->bigInteger('serial');
+            $table->bigInteger('start_serial');
             $table->date('running_date');
             $table->string('wu');
            

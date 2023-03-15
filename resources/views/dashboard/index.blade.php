@@ -68,7 +68,7 @@
               <div class="col-md-4 col-sm-6 ">
                 <div class="x_panel fixed_height_320">
                   <div class="x_title">
-                    <h2>App Devices <small>Sessions</small></h2>
+                    <h2>History Upload<small>Sessions</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -291,7 +291,7 @@
                 </div>
               </div>
 
-              <div class="col-md-4 col-sm-6  widget_tally_box">
+              {{-- <div class="col-md-4 col-sm-6  widget_tally_box">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>User Uptake</h2>
@@ -376,10 +376,10 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> --}}
 
               <!-- start of weather widget -->
-              <div class="col-md-4 col-sm-6 ">
+              {{-- <div class="col-md-4 col-sm-6 ">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>Today's Weather <small>Sessions</small></h2>
@@ -502,10 +502,10 @@
                   </div>
                 </div>
 
-              </div>
+              </div> --}}
               <!-- end of weather widget -->
 
-              <div class="col-md-4 col-sm-6 ">
+              {{-- <div class="col-md-4 col-sm-6 ">
                 <div class="x_panel fixed_height_320">
                   <div class="x_title">
                     <h2>Incomes <small>Sessions</small></h2>
@@ -544,7 +544,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> --}}
             </div>
           </div>
         </div>

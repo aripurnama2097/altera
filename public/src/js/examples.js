@@ -1303,7 +1303,7 @@ function init_daterangepicker() {
             'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
         },
         opens: 'left',
-        buttonClasses: ['btn btn-default'],
+        buttonClasses: ['btn btn-primary'],
         applyClass: 'btn-small btn-primary',
         cancelClass: 'btn-small',
         format: 'MM/DD/YYYY',
@@ -2194,28 +2194,25 @@ function init_DataTables() {
         if ($("#datatable-buttons").length) {
             $("#datatable-buttons").DataTable({
                 dom: "Blfrtip",
-                buttons: [
-                    {
-                        extend: "copy",
-                        className: "btn-sm"
-                    },
-                    {
-                        extend: "csv",
-                        className: "btn-sm"
-                    },
-                    {
-                        extend: "excel",
-                        className: "btn-sm"
-                    },
-                    {
-                        extend: "pdfHtml5",
-                        className: "btn-sm"
-                    },
-                    {
-                        extend: "print",
-                        className: "btn-sm"
-                    },
-                ],
+                // buttons: [
+                   
+                //     {
+                //         extend: "csv",
+                //         className: "btn-sm btn-primary"
+                //     },
+                //     {
+                //         extend: "excel",
+                //         className: "btn-sm"
+                //     },
+                //     // {
+                //     //     extend: "pdfHtml5",
+                //     //     className: "btn-sm"
+                //     // },
+                //     {
+                //         extend: "print",
+                //         className: "btn-sm"
+                //     },
+                // ],
                 responsive: true
             });
         }
