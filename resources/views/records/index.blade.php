@@ -35,8 +35,7 @@
               </ul>
               <div class="clearfix"></div>
             </div>
-            <div class="x_content">
-               
+            <div class="x_content">        
               <form action="{{url('/alteration/upload')}}" method="post" enctype="multipart/form-data" >
                 {{-- @csrf
 
@@ -107,11 +106,10 @@
                       <th class="column-title text-center">End Serial PSO </th> 
                       <th class="column-title  text-center">Running Date PSO </th>
                       <th class="column-title  text-center">Lot Qty PSO </th>
-                      <th class="column-title text-center">Status Running Date</th>
-                      <th class="column-title text-center">Remark Serial</th>
                       <th class="column-title text-center">PSO Date</th>
                       <th class="column-title text-center">SMT Date</th>
-                      
+                      <th class="column-title text-center">Status Running Date</th>
+                      <th class="column-title text-center">Remark Serial</th>        
                       </tr>
                     </thead>
 
@@ -134,7 +132,8 @@
                             <td class="a-center "> {{$value->end_serial}} </td> 
                             <td class="a-center "> {{$value->start_date}} </td> 
                             <td class="a-center "> {{$value->lot_qty}} </td> 
-                           
+                            <td class="a-center "> {{$value->pso_date}} </td> 
+                            <td class="a-center "> {{$value->smt_date}} </td> 
                             <td class="a-center "> 
                               
                             <?php if ($value->running_date == $value->start_date ) {
@@ -150,9 +149,10 @@
 
                              if ($value->running_date =='') {
                                 echo '<span class= "badge badge-secondary">NO SCHEDULE</span>';
-                              }
-                              
-                              ?> </td> 
+                              }                 
+                              ?> 
+                            </td> 
+
                             <td class="a-center ">  
                               <?php if ($value->running_date == $value->start_date && $value->start_serial == $value->start_serial_pso) {
                                 echo '<span class= "badge badge-success">OK</span>';
@@ -163,20 +163,25 @@
                               if ($value->running_date != $value->start_date && $value->start_serial != $value->start_serial_pso) {
                                 echo '<span class= "badge badge-danger">MIDDLE LOT</span>';
                               }
+
+                              if ($value->running_date > $value->start_date && $value->start_serial == $value->start_serial_pso) {
+                                echo '<span class= "badge badge-warning">OK</span>';
+                              }
                               if ($value->running_date =='') {
                                 echo '-';
                               }
                             ?>
                             </td>
-                            <td class="a-center "> {{$value->pso_date}} </td> 
-                            <td class="a-center "> {{$value->smt_date}} </td> 
                       </tr>
-                    
                       <?php $no++ ;?>
-
                         @endforeach
                     </tbody>
                   </table>
+                  <br>
+                  <br>
+                  {{-- <div class="col-6">
+                    <p class="text-left text-black"> Running Date PSO != Running Date BOM : <span class="badge badge-warning">OK</span></p>
+                  </div> --}}
                 </div>
                 </div>
             </div>
@@ -190,7 +195,6 @@
     </div>
 </div>
 </div>
-
 
 
 <!-- MODAL CREATE DATA MASTER -->
@@ -249,8 +253,40 @@ $(document).ready(function() {
         }
     });
 
-   
+    
+// FILTER DATATABLE
+
+  var table = $('#datatable-buttons').DataTable();
+  table.order([2, 'desc']).draw();
+  table.on('order.dt search.dt', function() {
+    table.column(0, {search:'applied', order:'applied'}).nodes().each(function(cell, i) {
+      cell.innerHTML = i+1;
+    });
+  }).draw();
+
+
+//   var table = $('#data-table').DataTable( {
+//     buttons: [
+//         { extend: 'csv', name: 'csv' }
+//     ]
+// });
+
+
+
+
+ 
+// table.buttons( 'csv:name' ).disable();
   
+// table.buttons().container()
+//     .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
+
+//     var table = $('#myTable').DataTable();
+ 
+//  new $.fn.dataTable.Buttons( table, {
+//      buttons: [
+//          'copy', 'excel', 'pdf'
+//      ]
+//  } );
   // Ketika select dropdown diubah nilainya
   // $('#status').change(function() {
   //   var selectedValue = $(this).val(); // Ambil nilai yang dipilih
@@ -310,6 +346,9 @@ $('#date-form').submit(function(event) {
             data = data + "<td>"+value.start_date+"</td>"
             data = data + "<td>"+value.smt_date+"</td>"
             data = data + "<td>"+value.status+"</td>"
+         
+         
+         
             data = data + "<td>"+value.remark+"</td>"
 
             data = data + "</tr>"

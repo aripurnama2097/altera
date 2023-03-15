@@ -24,9 +24,9 @@
       </div>
 
       <div class="clearfix"></div>
-      <div class="row">
+      <div class="row ">
         <div class="col-md-12 col-sm-12  ">
-          <div class="x_panel">
+          <div class="x_panel border border-secondary rounded ">
             <div class="x_title">
               <h2>Compare Alteration With PSO</h2>
              
@@ -57,7 +57,7 @@
 
 
 
-          <div class="x_panel">
+          {{-- <div class="x_panel">
             <div class="col-md-12 col-sm-12 ">
               <div class="x_panel">
                 <div class="x_title">
@@ -99,9 +99,7 @@
           </div>
               </div>
             </div>
-          </div>
-
-
+          </div> --}}
         </div>
       </div>
     </div>
@@ -109,7 +107,7 @@
 
 
 
-<!-- MODAL CREATE DATA MASTER -->
+<!-- MODAL SELECT PSO -->
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xs">
       <div class="modal-content">
@@ -154,14 +152,22 @@
                     </div>
                   </div> --}}
 
-                  <div class="nk-int-st">
+                  <select class="custom-select custom-select-sm" name="create_time">  
+                    <option selected style="padding:5px">---SELECT DATA PSO---</option>
+                    @foreach($pso as $dd)
+                    <option class="text-danger;padding:10px" style="padding:5px">{{$dd}}</option>
+                    @endforeach 
+                  </select>
+
+                {{-- <div class="nk-int-st">
                       <input class="form-control" list="datalistOptions" id="exampleDataList" name="create_time" placeholder="Type to search..." required>
 										<datalist id="datalistOptions">
 											@foreach($pso as $dd)
 											<option value="{{$dd}}">{{$dd}}</option>
 											@endforeach
 										</datalist>
-                  </div>
+                  </div> --}}
+
                 </div>
               </div>
             </div>
@@ -187,6 +193,7 @@
   </div>
 
 <script> 
+
 $(document).ready(function() {
   $.ajaxSetup({
         headers: {
@@ -207,7 +214,7 @@ $(document).ready(function() {
 
     cancelButton.addEventListener('click', function() {
       // Menampilkan spinner loading
-      spinner.style.display = 'none';
+    spinner.style.display = 'none';
     });
 
 });

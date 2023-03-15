@@ -72,12 +72,11 @@
         </div> --}}
 
     </div>
-
+    
     @yield('section')
+    @include('layouts.script')
+    <!-- footer content -->
+  @include('layouts.footer')
+    <!-- /footer content -->
   </body>
 
-
-     <!-- footer content -->
-  @include('layouts.footer')
-     <!-- /footer content -->
-  @include('layouts.script')

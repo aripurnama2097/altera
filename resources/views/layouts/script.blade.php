@@ -38,13 +38,10 @@
         <script src="{{asset ('') }}vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
     
         <!-- Custom Theme Scripts -->
-        <script src="{{asset ('') }}build/js/custom.min.js"></script>
-        {{-- <script src="{{asset ('') }}build/js/custom_revbutton.js"></script> --}}
-
+        {{-- <script src="{{asset ('') }}build/js/custom.min.js"></script> --}}
+        <script src="{{asset ('') }}build/js/custom_revbutton.js"></script>
 
         <script src="{{asset('')}}vendors/dropzone/dist/min/dropzone.min.js"></script>
-
-
 
 
         <script src="{{asset('')}}vendors/iCheck/icheck.min.js"></script>

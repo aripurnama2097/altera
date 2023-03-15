@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+// use DataTables\DataTables;
 
 
 class RecordController extends Controller
@@ -14,6 +15,15 @@ class RecordController extends Controller
 
         return view('records.index', 
         compact('data'));
+
+        // return Datatable::of($data);
+
+        // return DataTables::of($data)
+        //     ->addColumn('rownum', function ($data) {
+        //         static $i = 1;
+        //         return $i++;
+        //     })
+        //     ->make(true);
     }
 
 
@@ -55,8 +65,6 @@ class RecordController extends Controller
         //DELETE FROM RECORDS
         DB::table('records')->truncate();
         return redirect('records')->with('success', 'Data Berhasil di backup');
-
-       
 
     }
     

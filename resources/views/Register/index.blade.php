@@ -15,7 +15,7 @@
   <div class="col-lg-5">
     <main class="form-registration">
       <h1 style="color:aliceblue" class="h3 mb-3 font-weight-normal text-center">Register Form</h1>
-     <form action="/register" method="post">
+     <form action="{{url('/register')}}" method="post">
       @csrf
       <div class="form-floating">
       <input type="text" name="name" id="name"class="form-control rounded-top @error('name')is-invalid @enderror" placeholder="Name" required value="{{old('name')}} " autofocus>
@@ -70,7 +70,7 @@
          Register
         </button>
       </form>
-      <small class="d-block text-center mt-4"> <a href="/login">Back</a></small>
+      <small class="d-block text-center mt-4"> <a href="{{url('/login')}}">Back</a></small>
      </main>
   </div>
 </div>
