@@ -1,0 +1,84 @@
+#Step Progress: 
+1. Design database
+    a. table master alteration (OK)
+    b. table user(OK)
+    c. table Record (Ok)
+    d. Backup Record
+
+2. Design Template
+    a. Page Login (OK)
+    b. register (OK)
+    c. reset password (OK)
+    d. Dashboard menu (OK)
+
+3. Menu Upload Data Master Alteration
+    a. Upload data from csv // 
+        - Bug bagian header 
+        - format convert untuk field running date yang kosong (OK)
+    b. input data manual   (OK)
+    c. Delete All data (OK)
+    d. Filter(OK)
+    e. Template header (OK)
+
+4. Menu Compare Alteration :    
+    a. Ambil data dari PSO (OK)
+    b. Item yang dicompare:
+        - Model  (OK)
+        - Start serial (OK)
+        - Running Date (OK)
+
+    c. Step Compare
+        1. Pilih data dari pso(terbaru)
+            select data pso where create_time ='desc' (OK)
+
+        2. compare data  alteration dengan pso
+           select doc_no, old_part_no, new_part_no, model,start_serial,running_date, wu from altera.alterations as a
+           select model_no,start_serial,start_date,end_date, smt_date from db_pso.t_file as b
+           where b.create_time ='20230214'(OK)
+        
+        3. Status Compare  
+         * Berdasarkan Schedule :
+            - On Schedule (OK)
+                Running Date PSO dan Alteration sama  
+            - No schedule (OK)
+                Jika data Running Date pada Alteration tidak ada pada PSO
+            - Up schedule (OK)
+                Jika data Running Date pada alteration < PSO
+            - Down schedule (OK)
+                Jika data Running Date pada Alteration > PSO
+
+        * Berdasarkan Remark
+            - OK (OK)
+                Jika data start_serial pada Alteration sama dengan PSO
+            - Mid Lot (OK)
+                Start_serial pada Alteration tidak ditemukan dipso karena pso ada ditengah Lot/akhir Lot
+
+
+          
+
+5. Menu Record Alteration :
+    a. Menu Record (OK)
+    b. Filter Data Category Status:
+     * Berdasarkan Schedule :
+      - AllData
+      - On Schedule
+      - Up Schedule
+      - Down Schedule
+      - No Schedule
+
+       * Berdasarkan Remark
+      - OK
+      - Mid Lot
+
+
+         
+Activity :
+1. Add BackUp Record di menu record2
+2. Add Header Format in Alteration menu
+
+
+
+
+
+
+

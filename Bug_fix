@@ -1,0 +1,58 @@
+Concept :
+
+1. Request Item
+    - Compare Alteration Prod schedule
+    - Compare untuk mengetahui adanya perubahan di MID lot
+    - Filter data ada 2 pilihan berdasarkan awal lot dan akhir 
+    - tambahan optional untuk input data alteration melalui WEB
+
+
+Step Progress: 
+1. Design database
+    a. table master alteration (OK)
+    b. table user(OK)
+    c. table Record
+
+2. Design Template
+    a. Page Login (OK)
+    b. register (OK)
+    c. reset password (OK)
+    d. Tampilan dashboard menu (OK)
+
+3. Menu Upload Data Master Alteration
+    a. Import data from csv data
+    b. input data manual one by one  (OK)
+    c. Delete All data (OK)
+    d. Filter(OK)
+
+4. Menu Compare Alteration :    
+    a. Ambil data dari PSO (OK)
+    b. Item yang dicompare:
+        - Model 
+        - Start serial
+        - Date
+    c. Step Compare
+        1. Pilih data dari pso(terbaru)
+            select data pso where create_time ='desc'
+
+        2. compare data  alteration dengan pso
+           select doc_no, old_part_no, new_part_no, model,start_serial,running_date, wu */ALTERATION DATA/*
+           select model_no,start_serial,start_date,end_date, smt_date */PSO DATA/*
+           where create_time ='new'
+
+5. Menu Record Alteration :
+    a. Record
+    b. Filter Data Category Status:
+      - On Schedule
+         Jika data start_date PSO dan Alteration sama
+      - No schedule
+         Jika data start_date pada Alteration tidak ada pada PSO
+      - Middle lot
+         Jika data start_serial pada Alteration tidak ditemukan dipso karena pso ada ditengah lot
+         
+
+
+
+
+
+

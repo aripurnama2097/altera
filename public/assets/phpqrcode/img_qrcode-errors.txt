@@ -1,0 +1,1 @@
+2023-01-05 06:42:07: ord() expects parameter 1 to be string, object given2023-01-05 06:42:31: ord() expects parameter 1 to be string, object given
