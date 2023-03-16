@@ -24,6 +24,9 @@
           <div class="x_panel">
             <div class="x_title">
               <h2>Record Data Compare</h2>
+              @if(Session::has('success'))
+              <p class="alert alert-success">{{Session::get('success')}}</p>
+              @endif
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>

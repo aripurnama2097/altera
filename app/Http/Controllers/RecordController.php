@@ -54,6 +54,8 @@ class RecordController extends Controller
 
    
         $dt1 = DB::table('records')
+        ->select('doc_no', 'old_part_no','new_part_no','model','start_serial','running_date','wu','model_no','start_serial_pso','end_serial','pso_date','qty','lot_qty','start_date',
+                 'end_date','smt_date','status','remark')
         ->where($request->all())->get();
 
         // return $dt1;

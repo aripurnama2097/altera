@@ -54,7 +54,7 @@ class CompareController extends Controller
                             order by id asc");
 
 
-            return redirect('/compare')->with('success', 'COMPARE DATA SUCCESS, CHECK RECORD MENU');
+            return redirect('/records')->with('success', 'COMPARE DATA SUCCESS, CHECK RECORD MENU');
         
             // if('status'== NULL){
             //     $data = connection('mysql')
