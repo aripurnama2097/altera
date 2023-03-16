@@ -6,11 +6,6 @@ node_modules
 
 /public/css
 /public/js
-/public/assets/
-/public/vendors/
-/public/images/
-/public/docs/
-/public/build/
 /production
 
 /database/migrations
