@@ -8,7 +8,14 @@
 <div class="right_col" role="main">
     <div class="">
       <div class="page-title">
+        @if(Session::has('success'))
+        <p class="alert alert-success">{{Session::get('success')}}</p>
+        @endif
         <div class="title_left">
+
+
+        
+
         </div>
         <div class="title_right">
           <div class="col-md-5 col-sm-5   form-group pull-right top_search">
@@ -23,10 +30,8 @@
         <div class="col-md-12 col-sm-12  ">
           <div class="x_panel">
             <div class="x_title">
-              <h2>Record Data Compare</h2>
-              @if(Session::has('success'))
-              <p class="alert alert-success">{{Session::get('success')}}</p>
-              @endif
+              {{-- <h2>Record Data Compare</h2> --}}
+            
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -36,6 +41,9 @@
                 <li><a class="close-link"><i class="fa fa-close"></i></a>
                 </li>
               </ul>
+              @if(Session::has('success'))
+              <p class="alert alert-primary">{{Session::get('success')}}</p>
+              @endif
               <div class="clearfix"></div>
             </div>
             <div class="x_content">        
@@ -59,7 +67,7 @@
             <div class="col-md-12 col-sm-12 ">
               <div class="x_panel">
                 <div class="x_title">
-                  <h2>DATA COMPARE</small></h2>
+                  <h2>RESULT COMPARE</small></h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -87,7 +95,7 @@
                     <div class="d-flex justify-content-end">
                         {{-- <div class="btn-group btn-sm " role="group" aria-label="Basic example"> --}}
                       <a type="button" href="{{url('/records')}}" class="btn btn-info btn-sm text-white"><i class="fa fa-refresh"></i> Refresh</a>
-                      <a type="button" href="{{url('/records/backup')}}" class="btn btn-warning btn-sm text-dark"><i class="fa fa-database"></i> Records Backup</a>
+                      <a type="button"  id="recBackup"  class="btn btn-warning btn-sm text-dark"><i class="fa fa-database"></i> Records Backup</a>
                       
                     {{-- </div> --}}
                   </div>
@@ -101,18 +109,19 @@
                       <th class="column-title text-center">Doc Number </th>
                       <th class="column-title text-center">Old Part Number </th>
                       <th class="column-title text-center">New Part Number </th>  
-                      <th class="column-title text-center">Model </th>
+                      <th class="column-title text-center;backhround-color:white">Model </th>
+                      <th class="column-title text-center">Prod No </th>
                       <th class="column-title text-center">Start Serial BOM </th> 
                       <th class="column-title text-center">Running Date BOM</th>
                       <th class="column-title text-center">WU </th>
-                      <th class="column-title text-center">Start Serial PSO </th> 
-                      <th class="column-title text-center">End Serial PSO </th> 
-                      <th class="column-title  text-center">Running Date PSO </th>
-                      <th class="column-title  text-center">Lot Qty PSO </th>
-                      <th class="column-title text-center">PSO Date</th>
-                      <th class="column-title text-center">SMT Date</th>
-                      <th class="column-title text-center">Status Running Date</th>
-                      <th class="column-title text-center">Remark Serial</th>        
+                      <th class="column-title text-center table-warning text-dark">Start Serial PSO </th> 
+                      <th class="column-title text-center table-warning text-dark">End Serial PSO </th> 
+                      <th class="column-title  text-center table-warning text-dark">Running Date PSO </th>
+                      <th class="column-title  text-center table-warning text-dark">Lot Qty PSO </th>
+                      <th class="column-title text-center table-warning text-dark">PSO Date</th>
+                      <th class="column-title text-center table-warning text-dark">SMT Date</th>
+                      <th class="column-title text-center table-success text-dark">Status Running Date</th>
+                      <th class="column-title text-center table-success text-dark">Remark Serial</th>        
                       </tr>
                     </thead>
 
@@ -126,7 +135,8 @@
                             <td class="a-center">  {{$value->doc_no}} </td>                      
                             <td class="a-center">  {{$value->old_part_no}} </td>                             
                             <td class="a-center">  {{$value->new_part_no}} </td>                          
-                            <td class="a-center "> {{$value->model}} </td>                             
+                            <td class="a-center">  {{$value->model}} </td> 
+                            <td class="a-center"> {{$value->lot_no}} </td>                                 
                             <td class="a-center "> {{$value->start_serial}} </td>                             
                             <td class="a-center "> {{$value->running_date}} </td>
                             <td class="a-center "> {{$value->wu}} </td>  
@@ -136,21 +146,31 @@
                             <td class="a-center "> {{$value->start_date}} </td> 
                             <td class="a-center "> {{$value->lot_qty}} </td> 
                             <td class="a-center "> {{$value->pso_date}} </td> 
-                            <td class="a-center "> {{$value->smt_date}} </td> 
+                            <td class="a-center ">
+                               {{-- {{$value->smt_date}}  --}}
+                               <?php if($value->wu = 'F1'){
+                                $value->smt_date = null;
+                               } ?>
+                                                        
+                              </td> 
                             <td class="a-center "> 
                               
                             <?php if ($value->running_date == $value->start_date ) {
                                 echo '<span class= "badge badge-primary">ON SCHEDULE</span>';
                               }
                               if ($value->running_date > $value->start_date && $value->running_date!='') {
-                                  echo '<span class= "badge badge-info">DOWN SCHEDULE</span>';
+                                  echo '<span class= "badge badge-info">UP SCHEDULE</span>';
                               }
 
                                if ($value->running_date < $value->start_date && $value->running_date!='') {
-                                echo '<span class= "badge badge-warning">UP SCHEDULE</span>';
+                                echo '<span class= "badge badge-warning">DOWN SCHEDULE</span>';
                               }
 
-                             if ($value->running_date =='') {
+                              if ($value->running_date =='' && $value->start_date !='') {
+                                echo '<span class= "badge badge-light">NEW SCHEDULE</span>';
+                              }    
+
+                             if ($value->running_date =='' && $value->start_date ='') {
                                 echo '<span class= "badge badge-secondary">NO SCHEDULE</span>';
                               }                 
                               ?> 
@@ -167,12 +187,12 @@
                                 echo '<span class= "badge badge-danger">MIDDLE LOT</span>';
                               }
 
-                              if ($value->running_date > $value->start_date && $value->start_serial == $value->start_serial_pso) {
+                              if ($value->running_date > $value->start_date  && $value->start_serial == $value->start_serial_pso) {
                                 echo '<span class= "badge badge-warning">OK</span>';
                               }
-                              if ($value->running_date =='') {
-                                echo '-';
-                              }
+                              // if ($value->running_date =='') {
+                              //   echo '-';
+                              // }
                             ?>
                             </td>
                       </tr>
@@ -274,6 +294,17 @@ $(document).ready(function() {
 //     ]
 // });
 
+$('#recBackup').click(function() {
+        if (confirm('Are you sure you want to Backup Record?')) {
+            $.ajax({
+                url: "{{url('records/backup')}}",
+                type: 'get',
+                success: function(result) {
+                    alert('All records has been backup');
+                }
+            });
+        }
+    });
 
 
 

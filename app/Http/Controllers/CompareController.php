@@ -41,9 +41,9 @@ class CompareController extends Controller
         // ->insertUsing(['column1', 'column2'], function($query){
           
 
-           $result = DB::connection('mysql')->select( "INSERT into altera.records (doc_no,old_part_no,new_part_no,model,start_serial,running_date,wu,model_no,start_serial_pso,end_serial,pso_date,qty,lot_qty,start_date,end_date,smt_date)
+           $result = DB::connection('mysql')->select( "INSERT into altera.records (doc_no,old_part_no,new_part_no,model,start_serial,running_date,wu,model_no,start_serial_pso,end_serial,pso_date,lot_no,qty,lot_qty,start_date,end_date,smt_date)
                             SELECT B.doc_no, B.old_part_no, B.new_part_no, B.model, B.start_serial, B.running_date,B.wu,
-                            T.model_no,  T.start_serial, T.end_serial, T.pso_date,X.qty,X.lot_qty,X.start_date,X.end_date,DATE_ADD(X.start_date, INTERVAL -7 DAY) as smt_date 
+                            T.model_no,  T.start_serial, T.end_serial, T.pso_date,X.lot_no,X.qty,X.lot_qty,X.start_date,X.end_date,DATE_ADD(X.start_date, INTERVAL -7 DAY) as smt_date 
                             from 
                             (SELECT distinct model_no, start_serial,sum(start_serial+qty) as end_serial,create_time as `pso_date` FROM db_pso.t_file
                             where create_time = '{$create_time}'
@@ -54,7 +54,7 @@ class CompareController extends Controller
                             order by id asc");
 
 
-            return redirect('/records')->with('success', 'COMPARE DATA SUCCESS, CHECK RECORD MENU');
+            return redirect('/records')->with('success', 'COMPARE DATA SUCCESS');
         
             // if('status'== NULL){
             //     $data = connection('mysql')

@@ -38,6 +38,7 @@
          <label for="name">Username</label>
           @error('name')
          <div class="invalid-feedback" style="color:aliceblue">
+          
           {{$message}}
          </div>
         @enderror

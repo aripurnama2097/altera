@@ -41,7 +41,7 @@
               <ul class="nav navbar-right panel_toolbox">
                 <div class="btn-group btn-sm " role="group" aria-label="Basic example">
                   <a type="button" data-toggle="modal" data-target="#staticBackdrop" class="btn btn-primary btn-sm text-white shadow-lg"><i class="fa fa-edit"></i> Create data</a>
-                <a type="button" href="{{url('alteration/export')}}" class="btn btn-warning btn-sm text-dark shadow-lg"><i class="fa fa-download"></i> Header</a>
+                <a type="button" href="{{url('alteration/export')}}" class="btn btn-success btn-sm text-white shadow-lg"><i class="fa fa-download"></i> Header</a>
                   {{-- <button type="button" class="btn btn-secondary btn-sm">Right</button> --}}
                 </div>
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -72,8 +72,14 @@
                 <div class="form-group form-control">
                   <input type="file" class="form-control-file form-control-xs border border-secondary" name="file" required>
                 </div>
-                <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i> Upload</button>
-                 
+                <button type="submit" id="submit" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i> Upload</button>
+                <div class="d-flex justify-content-end">
+                  <div id="spinner" class="spinner" style="display: none;">
+                    <div class="spinner-border text-info text-end" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
+                </div>
               </form>
               <br />
             </div>
@@ -144,7 +150,8 @@
                             <td class="a-center "> {{$value->wu}} </td>    
                             <td class="a-center "> {{$value->running_date}} </td>
                           
-                            <td class=" last">
+                            <td class=" a-center ">
+                              <div class="btn-group btn-sm " role="group" aria-label="Basic example">
                              <a  class="btn btn-primary btn-sm text-white"  data-toggle="modal" data-target="#updateModal_{{$value->id}}">Edit</a>
 
                              <form action="{{url('/alteration/'.$value->id. '/destroy')}}" method="GET" onsubmit="return confirm('Delete Part Data?')">
@@ -298,7 +305,7 @@
                               </div>
                            
 								
-                            </td>
+                              </div></td>
                       </tr>
                     
                       <?php $no++ ;?>
@@ -471,6 +478,7 @@
             <button type="submit" id="submit" onclick="spinner()" class="btn btn-info shadow-lg"><i class="fa fa-save"></i>  Submit</button>
           </div>
         </div>
+        
         <div class="d-flex justify-content-end">
           <div id="spinner" class="spinner" style="display: none;">
             <div class="spinner-border text-primary text-end" role="status">
@@ -509,20 +517,20 @@ $(document).ready(function() {
     });
 
 
-    const cancelButton = document.querySelector('#cancel');
-    const submitButton = document.querySelector('#submit');
-    // Mendapatkan spinner loading
-    const spinner = document.querySelector('#spinner');
-    // Ketika tombol submit diklik
-    submitButton.addEventListener('click', function() {
-      // Menampilkan spinner loading
-      spinner.style.display = 'block';
-    });
+    // const cancelButton = document.querySelector('#cancel');
+    // const submitButton = document.querySelector('#submit');
+    // // Mendapatkan spinner loading
+    // const spinner = document.querySelector('#spinner');
+    // // Ketika tombol submit diklik
+    // submitButton.addEventListener('click', function() {
+    //   // Menampilkan spinner loading
+    //   spinner.style.display = 'block';
+    // });
 
-    cancelButton.addEventListener('click', function() {
-      // Menampilkan spinner loading
-      spinner.style.display = 'none';
-    });
+    // cancelButton.addEventListener('click', function() {
+    //   // Menampilkan spinner loading
+    //   spinner.style.display = 'none';
+    // });
 
 });
 
