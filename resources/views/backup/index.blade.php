@@ -313,8 +313,6 @@ $(document).ready(function() {
     });
 
    
- 
-
 
 $('#date-form').submit(function(event) {
   event.preventDefault();

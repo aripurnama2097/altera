@@ -62,3 +62,5 @@
         <script src="{{asset('')}}vendors/jszip/dist/jszip.min.js"></script>
         <script src="{{asset('')}}vendors/pdfmake/build/pdfmake.min.js"></script>
         <script src="{{asset('')}}vendors/pdfmake/build/vfs_fonts.js"></script>
+
+        <script src="{{asset('')}}package/dist/sweetalert2.min.js"></script> 

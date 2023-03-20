@@ -505,18 +505,61 @@ $(document).ready(function() {
     });
 
     $('#delete-all-data').click(function() {
-        if (confirm('Are you sure you want to reset all records?')) {
-            $.ajax({
+        // if (confirm('Are you sure you want to reset all records?')) {
+        //     $.ajax({
+        //         url: "{{url('alteration/delete')}}",
+        //         type: 'get',
+        //         success: function(result) {
+        //             alert('All records master have been reset');
+        //         }
+        //     });
+        // }
+
+        const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
+
+swalWithBootstrapButtons.fire({
+  title: 'Are you sure?',
+  text: "Reset Master Alteration!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Yes, Reset it!',
+  cancelButtonText: 'No, cancel!',
+  reverseButtons: true
+}).then((result) => {
+  if (result.isConfirmed) {
+
+    $.ajax({
                 url: "{{url('alteration/delete')}}",
                 type: 'get',
                 success: function(result) {
-                    alert('All records master have been reset');
+                  swalWithBootstrapButtons.fire(
+                'SUCCESS!',
+                'Your file has been reset.',
+                'success'
+                  )
                 }
             });
-        }
+    
+  } else if (
+    /* Read more about handling dismissals below */
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire(
+      'Cancelled',
+      'Your imaginary file is safe :)',
+      'error'
+    )
+  }
+})
     });
 
-
+   
     // const cancelButton = document.querySelector('#cancel');
     // const submitButton = document.querySelector('#submit');
     // // Mendapatkan spinner loading

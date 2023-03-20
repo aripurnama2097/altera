@@ -12,10 +12,6 @@
         <p class="alert alert-success">{{Session::get('success')}}</p>
         @endif
         <div class="title_left">
-
-
-        
-
         </div>
         <div class="title_right">
           <div class="col-md-5 col-sm-5   form-group pull-right top_search">
@@ -25,7 +21,6 @@
         </div>
       </div>
       <div class="clearfix"></div>
-
       <div class="row">
         <div class="col-md-12 col-sm-12  ">
           <div class="x_panel">
@@ -295,15 +290,60 @@ $(document).ready(function() {
 // });
 
 $('#recBackup').click(function() {
-        if (confirm('Are you sure you want to Backup Record?')) {
+
+        // if (confirm('Are you sure you want to Backup Record?')) {
+        //     $.ajax({
+        //         url: "{{url('records/backup')}}",
+        //         type: 'get',
+        //         success: function(result) {
+        //             alert('All records has been backup');
+        //         }
+        //     });
+        // }
+
+        const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-danger'
+         },
+         buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "Backup Record Data!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, Reset it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+
+        }).then((result) => {
+          if (result.isConfirmed) {
+
             $.ajax({
-                url: "{{url('records/backup')}}",
-                type: 'get',
-                success: function(result) {
-                    alert('All records has been backup');
-                }
-            });
-        }
+                        url: "{{url('records/backup')}}",
+                        type: 'get',
+                        success: function(result) {
+                          swalWithBootstrapButtons.fire(
+                        'SUCCESS!',
+                        'Your file has been backup.',
+                        'success'
+                          )
+                        }
+                    });
+            
+          } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            swalWithBootstrapButtons.fire(
+              'Cancelled',
+              'File Unbackup',
+              'error'
+            )
+          }
+        })
     });
 
 

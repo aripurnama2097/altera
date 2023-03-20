@@ -47,6 +47,8 @@
   <link href="{{asset ('') }}DataTables/Responsive-2.4.0/css/responsive.bootstrap.min.css" rel="stylesheet">
   <link href="{{asset ('') }}DataTables/Scroller-2.1.0/css/scroller.bootstrap.min.css" rel="stylesheet">
 
+  <link href="{{asset('')}}package/dist/sweetalert2.min.css" rel="stylesheet">
+
 
 
 
