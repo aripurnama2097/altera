@@ -8,9 +8,9 @@
 <div class="right_col" role="main">
     <div class="">
       <div class="page-title">
-        @if(Session::has('success'))
+        {{-- @if(Session::has('success'))
         <p class="alert alert-success">{{Session::get('success')}}</p>
-        @endif
+        @endif --}}
         <div class="title_left">
         </div>
         <div class="title_right">
@@ -314,7 +314,9 @@ $('#recBackup').click(function() {
         text: "Backup Record Data!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Yes, Reset it!',
+        // confirmButtonColor: '#3085d6',
+        // cancelButtonColor: '#d33'
+        confirmButtonText: 'Backup!',
         cancelButtonText: 'No, cancel!',
         reverseButtons: true
 

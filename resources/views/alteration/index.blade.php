@@ -50,29 +50,18 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                 </li>
-                {{-- <li><a class="close-link"><i class="fa fa-close"></i></a>
-                </li> --}}
+               
               </ul>
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
                
-              <form action="{{url('/alteration/upload')}}" method="post" enctype="multipart/form-data" >
+              <form  action="{{url('/alteration/upload')}}"enctype="multipart/form-data" method="POST" >
                 @csrf
-                {{-- <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <button class="btn btn-primary btn-sm" type="submit" id="inputGroupFileAddon03">Upload</button>
-                  </div>
-                  <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile03"  name="file" aria-describedby="inputGroupFileAddon03">
-                    <label class="custom-file-label" for="file">Choose file</label>
-                  </div>
-                </div>     --}}
-          
                 <div class="form-group form-control">
-                  <input type="file" class="form-control-file form-control-xs border border-secondary" name="file" required>
+                  <input type="file" class="form-control-file form-control-xs border border-secondary" name="file" required id="file">
                 </div>
-                <button type="submit" id="submit" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i> Upload</button>
+                <button type="submit" id="upload-submit"  class="btn btn-primary btn-sm"><i class="bi bi-upload"></i> Upload</button>
                 <div class="d-flex justify-content-end">
                   <div id="spinner" class="spinner" style="display: none;">
                     <div class="spinner-border text-info text-end" role="status">
@@ -153,8 +142,8 @@
                             <td class=" a-center ">
                               <div class="btn-group btn-sm " role="group" aria-label="Basic example">
                              <a  class="btn btn-primary btn-sm text-white"  data-toggle="modal" data-target="#updateModal_{{$value->id}}">Edit</a>
-
-                             <form action="{{url('/alteration/'.$value->id. '/destroy')}}" method="GET" onsubmit="return confirm('Delete Part Data?')">
+                             {{-- <a href="" class="button" data-id="{{$value->id}}">Hapus</a> --}}
+                             <form  action="{{url('/alteration/'.$value->id. '/destroy')}}" method="GET" >
                               @method('delete')
                               @csrf							
                               <input type="hidden" name="s_method" value="DELETE">
@@ -498,40 +487,34 @@
 
 
 $(document).ready(function() {
+
   $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 
-    $('#delete-all-data').click(function() {
-        // if (confirm('Are you sure you want to reset all records?')) {
-        //     $.ajax({
-        //         url: "{{url('alteration/delete')}}",
-        //         type: 'get',
-        //         success: function(result) {
-        //             alert('All records master have been reset');
-        //         }
-        //     });
-        // }
-
+$('#delete-all-data').click(function() {
+      
         const swalWithBootstrapButtons = Swal.mixin({
-  customClass: {
-    confirmButton: 'btn btn-success',
-    cancelButton: 'btn btn-danger'
-  },
-  buttonsStyling: false
-})
+        customClass: {
+        confirmButton: 'btn btn-primary',
+        cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+    })
 
-swalWithBootstrapButtons.fire({
-  title: 'Are you sure?',
-  text: "Reset Master Alteration!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonText: 'Yes, Reset it!',
-  cancelButtonText: 'No, cancel!',
-  reverseButtons: true
-}).then((result) => {
+        swalWithBootstrapButtons.fire({
+        // position: 'top-end',
+        // toast : true,
+        title: 'Are you sure?',
+        text: "Reset Master Alteration!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Reset Data',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+  }).then((result) => {
   if (result.isConfirmed) {
 
     $.ajax({
@@ -544,6 +527,7 @@ swalWithBootstrapButtons.fire({
                 'success'
                   )
                 }
+
             });
     
   } else if (
@@ -556,26 +540,122 @@ swalWithBootstrapButtons.fire({
       'error'
     )
   }
-})
+  });
+});
+
+
+$('#upload-submit').click(function() {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 8000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    
+    Toast.fire({
+      icon: 'Waiting...',
+      title: 'Process Upload'
+    })
+    
     });
 
-   
-    // const cancelButton = document.querySelector('#cancel');
-    // const submitButton = document.querySelector('#submit');
-    // // Mendapatkan spinner loading
-    // const spinner = document.querySelector('#spinner');
-    // // Ketika tombol submit diklik
-    // submitButton.addEventListener('click', function() {
-    //   // Menampilkan spinner loading
-    //   spinner.style.display = 'block';
-    // });
 
-    // cancelButton.addEventListener('click', function() {
-    //   // Menampilkan spinner loading
-    //   spinner.style.display = 'none';
-    // });
+  });
 
-});
+// $(document).on('click', '.button', function (e) {
+
+//   const swalWithBootstrapButtons = Swal.mixin({
+//         customClass: {
+//         confirmButton: 'btn btn-primary',
+//         cancelButton: 'btn btn-danger'
+//     },
+//     buttonsStyling: false
+//     })
+
+//     swalWithBootstrapButtons.fire({
+//         // position: 'top-end',
+//         // toast : true,
+//         title: 'Are you sure?',
+//         text: "Delete Item Alteration!",
+//         icon: 'warning',
+//         showCancelButton: true,
+//         confirmButtonText: 'Yes, Delete it!',
+//         cancelButtonText: 'No, cancel!',
+//         reverseButtons: true
+//   }).then((result) => {
+//   if (result.isConfirmed) {
+
+//     $.ajax({
+//                 url: "{{url('alteration/destroy')}}",
+//                 type: 'get',
+//                 success: function(result) {
+//                   swalWithBootstrapButtons.fire(
+//                 'SUCCESS!',
+//                 'Your file has been reset.',
+//                 'success'
+//                   )
+//                 }
+
+//             });
+    
+//   } else if (
+//     /* Read more about handling dismissals below */
+//     result.dismiss === Swal.DismissReason.cancel
+//   ) {
+//     swalWithBootstrapButtons.fire(
+//       'Cancelled',
+//       'Your imaginary file is safe :)',
+//       'error'
+//     )
+//   }
+//   });
+// });
+
+
+  // function uploadMaster(){
+
+    // $('#form-upload').click(function() {
+      
+
+    // var file = $('#file').prop('files')[0];
+    // var formData = new FormData();
+    // formData.append('file', file);
+
+    // const Toast = Swal.mixin({
+    //   toast: true,
+    //   position: 'top-end',
+    //   showConfirmButton: false,
+    //   // timer: 3000,
+    //   timerProgressBar: true,
+    //   didOpen: (toast) => {
+    //     toast.addEventListener('mouseenter', Swal.stopTimer)
+    //     toast.addEventListener('mouseleave', Swal.resumeTimer)
+    //   }
+    // })
+
+    //       $.ajax({
+    //             url: "{{url('/alteration/upload')}}",
+    //             type: 'POST',
+    //             data: formData,
+    //            processData: false,
+    //             success: function(result) {
+    //               Toast.fire({
+    //               icon: 'success',
+    //               title: 'Upload Master Succesfully'
+    //             })
+    //             }
+    //        });
+
+    //       });
+  // }
+  
+  
+
 
 </script>
 @endsection

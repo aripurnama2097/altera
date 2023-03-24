@@ -8,9 +8,9 @@
       <div class="page-title">
         <div class="title_left">
           <h3>START COMPARE </h3>
-          @if(Session::has('success'))
+          {{-- @if(Session::has('success'))
           <p class="alert alert-primary">{{Session::get('success')}}</p>
-          @endif
+          @endif --}}
           
         </div>
 
@@ -215,6 +215,28 @@ $(document).ready(function() {
     cancelButton.addEventListener('click', function() {
       // Menampilkan spinner loading
     spinner.style.display = 'none';
+    });
+
+
+
+    $('#submit').click(function() {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    
+    Toast.fire({
+      icon: 'waiting...',
+      title: 'Process Compare'
+    })
+    
     });
 
 });
