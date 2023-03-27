@@ -38,7 +38,7 @@ class LoginController extends Controller
 
         if(Auth::attempt($credentials, true)){
             $request->session()->regenerate();
-            return redirect('/dashboard');// intented untuk direct url agar melewati middleware
+            return redirect('/alteration');// intented untuk direct url agar melewati middleware
         }
 
         return back()->with('loginError', 'Login Failed!'); 
