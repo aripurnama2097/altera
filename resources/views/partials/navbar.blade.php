@@ -16,10 +16,10 @@
 
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a href="{{url('')}}" class="nav-link">
+          {{-- <a href="{{url('')}}" class="nav-link">
            <i class="bi bi-arrow-left-square"></i>
              Back To Home
-         </a>
+         </a> --}}
      </li>
     </ul>
 
