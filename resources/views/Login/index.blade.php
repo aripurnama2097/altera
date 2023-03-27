@@ -34,9 +34,9 @@
     <form action="{{url('/login')}}" method="post">
       @csrf
         <div class="form-floating">
-        <input type="name"  name="name"class="form-control @error('name')is-invalid @enderror" placeholder="name" width="40% mb-lg-5" autofocus required>
-         <label for="name">Username</label>
-          @error('name')
+        <input type="text"  name="nik"class="form-control @error('nik')is-invalid @enderror" placeholder="NIK" width="40% mb-lg-5" autofocus required>
+         <label for="nik">NIK</label>
+          @error('nik')
          <div class="invalid-feedback" style="color:aliceblue">
           
           {{$message}}
