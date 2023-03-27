@@ -90,6 +90,10 @@
                     <div class="d-flex justify-content-end">
                         {{-- <div class="btn-group btn-sm " role="group" aria-label="Basic example"> --}}
                       <a type="button" href="{{url('/records')}}" class="btn btn-info btn-sm text-white"><i class="fa fa-refresh"></i> Refresh</a>
+                      {{-- <form id="myForm">
+                        @csrf
+                        <input type="text" name="pic" placeholder="PIC">
+                    </form> --}}
                       <a type="button"  id="recBackup"  class="btn btn-warning btn-sm text-dark"><i class="fa fa-database"></i> Records Backup</a>
                       
                     {{-- </div> --}}
@@ -105,13 +109,14 @@
                       <th class="column-title text-center">Old Part Number </th>
                       <th class="column-title text-center">New Part Number </th>  
                       <th class="column-title text-center;backhround-color:white">Model </th>
-                      <th class="column-title text-center">Prod No </th>
                       <th class="column-title text-center">Start Serial BOM </th> 
                       <th class="column-title text-center">Running Date BOM</th>
                       <th class="column-title text-center">WU </th>
                       <th class="column-title text-center table-warning text-dark">Start Serial PSO </th> 
                       <th class="column-title text-center table-warning text-dark">End Serial PSO </th> 
                       <th class="column-title  text-center table-warning text-dark">Running Date PSO </th>
+                      <th class="column-title text-center table-warning text-dark">Prod No </th>
+                      <th class="column-title  text-center table-warning text-dark">Qty PSO </th>
                       <th class="column-title  text-center table-warning text-dark">Lot Qty PSO </th>
                       <th class="column-title text-center table-warning text-dark">PSO Date</th>
                       <th class="column-title text-center table-warning text-dark">SMT Date</th>
@@ -131,14 +136,15 @@
                             <td class="a-center">  {{$value->old_part_no}} </td>                             
                             <td class="a-center">  {{$value->new_part_no}} </td>                          
                             <td class="a-center">  {{$value->model}} </td> 
-                            <td class="a-center"> {{$value->lot_no}} </td>                                 
                             <td class="a-center "> {{$value->start_serial}} </td>                             
                             <td class="a-center "> {{$value->running_date}} </td>
                             <td class="a-center "> {{$value->wu}} </td>  
                             {{-- //PSO --}}
                             <td class="a-center "> {{$value->start_serial_pso}} </td> 
                             <td class="a-center "> {{$value->end_serial}} </td> 
-                            <td class="a-center "> {{$value->start_date}} </td> 
+                            <td class="a-center "> {{$value->start_date}} </td>
+                            <td class="a-center"> {{$value->lot_no}} </td>                                 
+                            <td class="a-center "> {{$value->qty}} </td>  
                             <td class="a-center "> {{$value->lot_qty}} </td> 
                             <td class="a-center "> {{$value->pso_date}} </td> 
                             <td class="a-center ">
@@ -183,6 +189,10 @@
                               }
 
                               if ($value->running_date > $value->start_date  && $value->start_serial == $value->start_serial_pso) {
+                                echo '<span class= "badge badge-warning">OK</span>';
+                              }
+
+                              if ($value->running_date < $value->start_date  && $value->start_serial == $value->start_serial_pso) {
                                 echo '<span class= "badge badge-warning">OK</span>';
                               }
                               // if ($value->running_date =='') {
@@ -273,7 +283,6 @@ $(document).ready(function() {
 
     
 // FILTER DATATABLE
-
   var table = $('#datatable-buttons').DataTable();
   table.order([2, 'desc']).draw();
   table.on('order.dt search.dt', function() {
@@ -290,19 +299,10 @@ $(document).ready(function() {
 // });
 
 $('#recBackup').click(function() {
+  var name = $('input[name="pic"]').val();
 
-        // if (confirm('Are you sure you want to Backup Record?')) {
-        //     $.ajax({
-        //         url: "{{url('records/backup')}}",
-        //         type: 'get',
-        //         success: function(result) {
-        //             alert('All records has been backup');
-        //         }
-        //     });
-        // }
-
-        const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
+        const   swalWithBootstrapButtons = Swal.mixin({
+        customClass: { 
         confirmButton: 'btn btn-primary',
         cancelButton: 'btn btn-danger'
          },
@@ -310,21 +310,23 @@ $('#recBackup').click(function() {
         })
 
         swalWithBootstrapButtons.fire({
-        title: 'Are you sure?',
-        text: "Backup Record Data!",
+          
+        title: 'Are you sure Backup Data?',
+        html: `<input type="text" id="pic" name="pic" class="swal2-input" placeholder="PIC">`,
         icon: 'warning',
         showCancelButton: true,
-        // confirmButtonColor: '#3085d6',
-        // cancelButtonColor: '#d33'
         confirmButtonText: 'Backup!',
         cancelButtonText: 'No, cancel!',
-        reverseButtons: true
-
+        reverseButtons: true,
+        // formFields: [
+        // { id: 'pic', placeholder:'PIC', required: true },
+        // ]
         }).then((result) => {
           if (result.isConfirmed) {
 
             $.ajax({
                         url: "{{url('records/backup')}}",
+                        // data: $('#my-form').serialize(),
                         type: 'get',
                         success: function(result) {
                           swalWithBootstrapButtons.fire(
@@ -350,37 +352,6 @@ $('#recBackup').click(function() {
 
 
 
- 
-// table.buttons( 'csv:name' ).disable();
-  
-// table.buttons().container()
-//     .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
-
-//     var table = $('#myTable').DataTable();
- 
-//  new $.fn.dataTable.Buttons( table, {
-//      buttons: [
-//          'copy', 'excel', 'pdf'
-//      ]
-//  } );
-  // Ketika select dropdown diubah nilainya
-  // $('#status').change(function() {
-  //   var selectedValue = $(this).val(); // Ambil nilai yang dipilih
-
-  //   // Jika yang dipilih "Semua", tampilkan semua data
-  //   if (selectedValue === 'all') {
-  //     $('table tbody tr').show();
-  //   } else {
-  //     // Jika tidak, sembunyikan data yang tidak sesuai dan tampilkan yang sesuai
-  //     $('table tbody tr').filter(function() {
-  //       return $(this).find('td:nth-child(2)').text() !== selectedValue;
-  //     }).hide();
-
-  //     $('table tbody tr').filter(function() {
-  //       return $(this).find('td:nth-child(2)').text() === selectedValue;
-  //     }).show();
-  //   }
-  // });
 
 
 

@@ -31,7 +31,7 @@
         <input type="text" name="nik" id="nik"class="form-control rounded-top @error('nik')is-invalid @enderror" placeholder="NIK" required value="{{old('nik')}}">
          <label for="nik">NIK</label>
          @error('nik')
-         <div class="invalid-feedback">
+         <div class="invalid-feedback" style="color:aliceblue">
             {{$message}}
           </div>
         @enderror
@@ -51,7 +51,7 @@
          <input type="email" name="email"class="form-control @error('email')is-invalid @enderror" placeholder="Email" required value="{{old('email')}}">
          <label for="email">Email Address</label>
            @error('email')
-         <div class="invalid-feedback">
+         <div class="invalid-feedback" style="color:aliceblue">
             {{$message}}
           </div>
            @enderror
@@ -60,7 +60,7 @@
          <input type="password" name="password"class="form-control @error('password')is-invalid @enderror" placeholder="Password" required>
          <label for="floatingPassword">Password</label>
          @error('password')
-         <div class="invalid-feedback">
+         <div class="invalid-feedback" style="color:aliceblue">
             {{$message}}
           </div>
            @enderror
