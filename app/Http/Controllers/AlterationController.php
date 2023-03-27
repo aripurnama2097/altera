@@ -52,6 +52,8 @@ class AlterationController extends Controller
 
         DB::table('alterations')->truncate();
 
+        // DB::table('history')->insert('pic');
+
         return redirect()->back()->with('delete', 'All records have been deleted.');
     }
 
