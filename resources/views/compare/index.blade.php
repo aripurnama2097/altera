@@ -233,7 +233,7 @@ $(document).ready(function() {
     })
     
     Toast.fire({
-      icon: 'success',
+      icon: 'info',
       title: 'Process Compare'
     })
     

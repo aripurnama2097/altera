@@ -27,7 +27,7 @@ class ResetPasswordController extends Controller
             $user->update([
                 'password' => Hash::make($request->password)
             ]);
-            return redirect()->back()->with('success', 'Password berhasil diubah');
+            return redirect('/login')->with('success', 'Password berhasil diubah');
         } else {
             return redirect()->back()->with('error', 'Username atau email tidak ditemukan');
         }

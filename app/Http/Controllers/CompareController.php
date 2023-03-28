@@ -41,32 +41,32 @@ class CompareController extends Controller
         // ->insertUsing(['column1', 'column2'], function($query){
           
         //  query old
-           $result = DB::connection('mysql')->select( "INSERT into altera.records (doc_no,old_part_no,new_part_no,model,start_serial,running_date,wu,model_no,start_serial_pso,end_serial,pso_date,lot_no,qty,lot_qty,start_date,end_date,smt_date)
-           SELECT B.doc_no, B.old_part_no, B.new_part_no, B.model, B.start_serial, B.running_date,B.wu,
-                                       T.model_no,  T.start_serial, T.end_serial, T.pso_date,X.lot_no,X.qty,X.lot_qty,X.start_date, X.end_date,DATE_ADD(X.start_date, INTERVAL -7 DAY) as smt_date 
-                                       from 
-                                       (SELECT distinct model_no, start_serial,(start_serial+lot_qty - 1) as end_serial,create_time as `pso_date` FROM db_pso.t_file
-                                       where create_time = '{$create_time}'
-                                       group by model_no, start_serial,end_serial,pso_date
-                                       order by model_no asc) as T
-                                       left join db_pso.t_file X on X.model_no = T.model_no and X.start_serial = T.start_serial and X.create_time = T.pso_date 
-                                       inner join altera.alterations B on model = T.model_no and T.start_serial <= B.start_serial and T.end_serial >= B.start_serial  
-                                       order by id asc");
-
-        // with distinct qty
-        /** DNX997XRKN */
         //    $result = DB::connection('mysql')->select( "INSERT into altera.records (doc_no,old_part_no,new_part_no,model,start_serial,running_date,wu,model_no,start_serial_pso,end_serial,pso_date,lot_no,qty,lot_qty,start_date,end_date,smt_date)
-        //                             SELECT distinct B.doc_no, B.old_part_no, B.new_part_no, B.model, B.start_serial, B.running_date,B.wu,
-        //                             T.model_no,  T.start_serial, T.end_serial, T.pso_date,X.lot_no,X.qty, X.lot_qty, min(X.start_date) as start_date, min(X.end_date) as end_date,DATE_ADD(X.start_date, INTERVAL -7 DAY) as smt_date 
-        //                             from 
-        //                             (SELECT distinct model_no, start_serial,(start_serial+lot_qty - 1) as end_serial,create_time as `pso_date` FROM db_pso.t_file
+        //    SELECT B.doc_no, B.old_part_no, B.new_part_no, B.model, B.start_serial, B.running_date,B.wu,
+        //                                T.model_no,  T.start_serial, T.end_serial, T.pso_date,X.lot_no,X.qty,X.lot_qty,X.start_date, X.end_date,DATE_ADD(X.start_date, INTERVAL -7 DAY) as smt_date 
+        //                                from 
+        //                                (SELECT distinct model_no, start_serial,(start_serial+lot_qty - 1) as end_serial,create_time as `pso_date` FROM db_pso.t_file
         //                                where create_time = '{$create_time}'
         //                                group by model_no, start_serial,end_serial,pso_date
         //                                order by model_no asc) as T
         //                                left join db_pso.t_file X on X.model_no = T.model_no and X.start_serial = T.start_serial and X.create_time = T.pso_date 
         //                                inner join altera.alterations B on model = T.model_no and T.start_serial <= B.start_serial and T.end_serial >= B.start_serial  
-        //                                group by B.doc_no, B.old_part_no, B.new_part_no, B.model, B.start_serial, B.running_date,B.wu, T.model_no,  T.start_serial, T.end_serial, T.pso_date,X.lot_no,X.lot_qty
         //                                order by id asc");
+
+        // with distinct qty
+        /** DNX997XRKN */
+           $result = DB::connection('mysql')->select( "INSERT into altera.records (doc_no,old_part_no,new_part_no,model,start_serial,running_date,wu,model_no,start_serial_pso,end_serial,pso_date,lot_no,qty,lot_qty,start_date,end_date,smt_date)
+                                    SELECT distinct B.doc_no, B.old_part_no, B.new_part_no, B.model, B.start_serial, B.running_date,B.wu,
+                                    T.model_no,  T.start_serial, T.end_serial, T.pso_date,X.lot_no,X.qty, X.lot_qty, min(X.start_date) as start_date, min(X.end_date) as end_date,DATE_ADD(X.start_date, INTERVAL -7 DAY) as smt_date 
+                                    from 
+                                    (SELECT distinct model_no, start_serial,(start_serial+lot_qty - 1) as end_serial,create_time as `pso_date` FROM db_pso.t_file
+                                       where create_time = '{$create_time}'
+                                       group by model_no, start_serial,end_serial,pso_date
+                                       order by model_no asc) as T
+                                       left join db_pso.t_file X on X.model_no = T.model_no and X.start_serial = T.start_serial and X.create_time = T.pso_date 
+                                       inner join altera.alterations B on model = T.model_no and T.start_serial <= B.start_serial and T.end_serial >= B.start_serial  
+                                       group by B.doc_no, B.old_part_no, B.new_part_no, B.model, B.start_serial, B.running_date,B.wu, T.model_no,  T.start_serial, T.end_serial, T.pso_date,X.lot_no,X.lot_qty
+                                       order by id asc");
 
 
             return redirect('/records')->with('success', 'COMPARE DATA SUCCESS');
