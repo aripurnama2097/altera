@@ -62,7 +62,7 @@
 
         <li><a><i class="fa fa-file"></i> MANUAL INSTRUCTION<span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu">
-            <li><a href="page_403.html">FILE</a></li>
+            <li><a href="{{asset('')}}storage/WI/WI_ALTERA.pdf">FILE</a></li>
           </ul>
         </li>
       </ul>
