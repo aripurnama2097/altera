@@ -130,6 +130,7 @@
                       <th class="column-title text-center">Start Serial PSO </th> 
                       <th class="column-title text-center">End Serial PSO </th> 
                       <th class="column-title  text-center">Running Date PSO </th>
+                      <th class="column-title  text-center">Qty</th>
                       <th class="column-title  text-center">Lot Qty PSO </th>
                       <th class="column-title text-center">Status Running Date</th>
                       <th class="column-title text-center">Remark Serial</th>
@@ -156,39 +157,54 @@
                             <td class="a-center "> {{$value->start_serial_pso}} </td> 
                             <td class="a-center "> {{$value->end_serial}} </td> 
                             <td class="a-center "> {{$value->start_date}} </td> 
+                            <td class="a-center "> {{$value->qty}} </td> 
+                           
                             <td class="a-center "> {{$value->lot_qty}} </td> 
                            
                             <td class="a-center "> 
                               
                               <?php if ($value->running_date == $value->start_date ) {
-                                echo '<span class= "badge badge-success">ON SCHEDULE</span>';
+                                echo '<span class= "badge badge-primary">ON SCHEDULE</span>';
                               }
                               if ($value->running_date > $value->start_date && $value->running_date!='') {
-                                  echo '<span class= "badge badge-danger">DOWN SCHEDULE</span>';
+                                  echo '<span class= "badge badge-info">UP SCHEDULE</span>';
                               }
 
                                if ($value->running_date < $value->start_date && $value->running_date!='') {
-                                echo '<span class= "badge badge-info">UP SCHEDULE</span>';
+                                echo '<span class= "badge badge-warning">DOWN SCHEDULE</span>';
                               }
 
-                             if ($value->running_date =='') {
+                              if ($value->running_date =='' && $value->start_date !='') {
+                                echo '<span class= "badge badge-light">NEW SCHEDULE</span>';
+                              }    
+
+                             if ($value->running_date =='' && $value->start_date ='') {
                                 echo '<span class= "badge badge-secondary">NO SCHEDULE</span>';
-                              }
-                              
-                              ?> </td> 
+                              }                 
+                              ?> 
+                            </td> 
+
                             <td class="a-center ">  
                               <?php if ($value->running_date == $value->start_date && $value->start_serial == $value->start_serial_pso) {
                                 echo '<span class= "badge badge-success">OK</span>';
                               }
                               if ($value->running_date == $value->start_date && $value->start_serial != $value->start_serial_pso) {
-                                echo '<span class= "badge badge-warning">MIDDLE LOT</span>';
+                                echo '<span class= "badge badge-danger">MIDDLE LOT</span>';
                               }
                               if ($value->running_date != $value->start_date && $value->start_serial != $value->start_serial_pso) {
-                                echo '<span class= "badge badge-warning">MIDDLE LOT</span>';
+                                echo '<span class= "badge badge-danger">MIDDLE LOT</span>';
                               }
-                              if ($value->running_date =='') {
-                                echo '-';
+
+                              if ($value->running_date > $value->start_date  && $value->start_serial == $value->start_serial_pso) {
+                                echo '<span class= "badge badge-warning">OK</span>';
                               }
+
+                              if ($value->running_date < $value->start_date  && $value->start_serial == $value->start_serial_pso) {
+                                echo '<span class= "badge badge-warning">OK</span>';
+                              }
+                              // if ($value->running_date =='') {
+                              //   echo '-';
+                              // }
                             ?>
                             </td>
                             <td class="a-center "> {{$value->pso_date}} </td> 
@@ -299,7 +315,6 @@
 </div>
 <!-- Central Modal Medium Success-->
 </body>
-
 
 
 <script>
